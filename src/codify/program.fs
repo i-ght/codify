@@ -85,10 +85,33 @@ let entryWriter (date: DateTimeOffset) =
         )
     writer
 
-let createMonthEntry (writer: StreamWriter) (date: DateTimeOffset) =
+let appendDocHeader (writer: StreamWriter) (date: DateTimeOffset) =
     let month = date.ToString("MMMM")
     writer.WriteLine($"= {date.Year} {month}")
- 
+
+let appendPoem (writer: StreamWriter) (entry: ContentEntry) =
+    let date = entry.Date.ToString("yyyy-MM-dd")
+    writer.WriteLine()
+    writer.WriteLine($"== {date}")
+    writer.WriteLine()
+    writer.WriteLine($"=== {entry.Name}")
+    writer.WriteLine()
+    
+    let lines = entry.Data.Split(Environment.NewLine)
+    for line in lines do
+        if not <| String.IsNullOrWhiteSpace(line) then
+            writer.WriteLine($"{line} +")
+let computeEntry (entry: ContentEntry) =
+    use writer = entryWriter entry.Date
+    let info =
+        FileInfo(asciiDocFileName entry.Date)
+    if info.Length = 0 then
+        appendDocHeader writer entry.Date
+    match entry.Tags[0] with
+    | "Poem" -> appendPoem writer entry
+    | _ -> ()
+    
+
 let head _argv =
     let ``content.csv`` = "./data/content.csv"
     let entries =
@@ -96,13 +119,7 @@ let head _argv =
         |> contentEntries
 
     for entry in entries do
-        let contentFileName = asciiDocFileName entry.Date
-        use writer = entryWriter entry.Date
-        let info =
-            FileInfo(asciiDocFileName entry.Date)
-        if info.Length = 0 then
-            createMonthEntry writer entry.Date
-        ()
+        computeEntry entry
 
     0
 
