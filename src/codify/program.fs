@@ -99,7 +99,9 @@ let appendPoem (writer: StreamWriter) (entry: ContentEntry) =
     writer.WriteLine()
     
     let lines = entry.Data.TrimEnd(Environment.NewLine.ToCharArray())
-    writer.WriteLine(lines)
+    let lines = lines.Split(Environment.NewLine)
+    for line in lines do
+        writer.WriteLine($"{line} +")
 
 
 let computeEntry (entry: ContentEntry) =
