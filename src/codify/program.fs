@@ -91,22 +91,24 @@ let appendDocHeader (writer: StreamWriter) (date: DateTimeOffset) =
 
 let appendPoem (writer: StreamWriter) (entry: ContentEntry) =
     let date = entry.Date.ToString("yyyy-MM-dd")
+
     writer.WriteLine()
     writer.WriteLine($"== {date}")
     writer.WriteLine()
     writer.WriteLine($"=== {entry.Name}")
     writer.WriteLine()
     
-    let lines = entry.Data.Split(Environment.NewLine)
-    for line in lines do
-        if not <| String.IsNullOrWhiteSpace(line) then
-            writer.WriteLine($"{line} +")
+    let lines = entry.Data.TrimEnd(Environment.NewLine.ToCharArray())
+    writer.WriteLine(lines)
+
+
 let computeEntry (entry: ContentEntry) =
     use writer = entryWriter entry.Date
     let info =
         FileInfo(asciiDocFileName entry.Date)
     if info.Length = 0 then
         appendDocHeader writer entry.Date
+
     match entry.Tags[0] with
     | "Poem" -> appendPoem writer entry
     | _ -> ()
