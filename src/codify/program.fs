@@ -5,17 +5,25 @@ open System.Collections.Generic
 
 open CsvHelper
 
+
 type ContentEntryData =
     { Date: DateTimeOffset 
       Name: string
       Tags: string 
-      Data: string }
+      Content: string }
 
-type ContentEntry =
-    { Date: DateTimeOffset 
+type EntryDay = DateTimeOffset
+
+type Entry =
+    { Date: EntryDay 
       Name: string
       Tags: string []
-      Data: string }
+      Content: string }
+
+type EntryMonth = DateTimeOffset
+type Entries = ResizeArray<Entry>
+type EntryDays = Dictionary<EntryDay, Entries>
+type EntriesMap = Dictionary<EntryMonth, EntryDays>
 
 module Env =
 
@@ -32,12 +40,18 @@ module Env =
         else 
             ValueSome envVar
 
+    let newLine =
+        Environment.NewLine
+
+[<RequireQualifiedAccess>]
+module Array =
+    let inline lasti (arr:_[]) = arr.Length - 1
+
 module String =
     let split (c: char) (s: string) = s.Split(c)
     
     let trim (s: string) = s.Trim()
     
-
 module Csv =
 
     let records<'a> (path: string) =
@@ -56,74 +70,156 @@ module Csv =
 
         records |> List.ofSeq
 
-let tags (tags: string) =
-    String.split ',' tags
-    |> Array.map String.trim
+module Entry =
 
-let contentEntries (data: ContentEntryData seq) = seq {
-    for entryData in data do
-        let entry =
-            { Date=entryData.Date
-              Name=entryData.Name
-              Tags=tags entryData.Tags
-              Data=entryData.Data }
-        yield entry
-}
+    let month (day: DateTimeOffset): EntryMonth =
+        let days =
+            TimeSpan.FromDays(float (day.Day - 1))
 
-let asciiDocFileName (date: DateTimeOffset) =
-    let month =
-        date
-            .ToString("MMM")
-            .ToLower()
-    $"content/{date.Year}{month}.adoc"
+        (*Changes date day of month to be one and hour:minute:second of time to be 00:00:00 *)
+        let ret =
+            day
+                .Subtract(days)
+                .ToUniversalTime()
+                .Add(day.Offset)
+        ret
 
-let entryWriter (date: DateTimeOffset) =
-    let writer =
-        new StreamWriter(
-            path=asciiDocFileName date,
-            append=true
-        )
-    writer
+    [<AutoOpen>]
+    module internal Adoc =
+        let tags (tags: string) =
+            String.split ',' tags
+            |> Array.map String.trim
+            
+        let writer path =
+            new StreamWriter(path=path)
 
-let appendDocHeader (writer: StreamWriter) (date: DateTimeOffset) =
-    let month = date.ToString("MMMM")
-    writer.WriteLine($"= {date.Year} {month}")
+        let appendLine (line: string) (writer: StreamWriter) =
+            writer.WriteLine(line)
 
-let appendPoem (writer: StreamWriter) (entry: ContentEntry) =
-    let date = entry.Date.ToString("yyyy-MM-dd")
+        let flush (writer: StreamWriter) =
+            writer.Flush()
 
-    writer.WriteLine()
-    writer.WriteLine($"== {date}")
-    writer.WriteLine()
-    writer.WriteLine($"=== {entry.Name}")
-    writer.WriteLine()
-    
-    let lines = entry.Data.TrimEnd(Environment.NewLine.ToCharArray())
-    let lines = lines.Split(Environment.NewLine)
-    for line in lines do
-        writer.WriteLine($"{line} +")
+        let adocLines (entry: Entry) =
+            let lines =
+                entry.Content.TrimEnd(
+                    Env.newLine.ToCharArray()
+                )
+            let lines = 
+                lines.Split(Env.newLine)
+                |> Array.map (fun line -> $"{line} +")
 
+            let i = Array.lasti lines
+            lines[i] <- lines[i].TrimEnd(" +".ToCharArray())
 
-let computeEntry (entry: ContentEntry) =
-    use writer = entryWriter entry.Date
-    let info =
-        FileInfo(asciiDocFileName entry.Date)
-    if info.Length = 0 then
-        appendDocHeader writer entry.Date
+            List.ofSeq lines
 
-    match entry.Tags[0] with
-    | "Poem" -> appendPoem writer entry
-    | _ -> ()
-    
+        let appendNameSection (entry: Entry) (writer: StreamWriter) =
+            let section =
+                [ ""
+                  $"==== {entry.Name}" ]
+                |> String.concat Env.newLine
+            appendLine section writer
+            
+        let appendContent (entry: Entry) (writer: StreamWriter) =
+
+            let content =
+                String.concat
+                <| Env.newLine
+                <| ([""] @ adocLines entry)
+            
+            appendLine content writer
+
+        let header =
+            [ "= Memory Map"
+              ":toc: left"
+              ":toclevels: 3" ]
+            |> String.concat Env.newLine
+
+        let appendHeader (writer: StreamWriter) =
+            appendLine header writer
+
+        let appendMonthSection (month: EntryMonth) (writer: StreamWriter) =
+            let ``yyyy MMM`` = month.ToString("yyyy MMM")
+            let section =
+                [ ""
+                  $"== {``yyyy MMM``}" ]
+                |> String.concat Env.newLine
+
+            appendLine section writer
+
+        let appendDaySection (day: EntryDay) (writer: StreamWriter) =
+            let date = day.ToString("MM-dd")
+            let section =
+                [ ""
+                  $"=== {date}" ]
+                |> String.concat Env.newLine
+            appendLine section writer
+
+    let ofData (entries: ContentEntryData seq) = seq {
+        for entry in entries do
+            yield 
+                { Date=entry.Date
+                  Name=entry.Name
+                  Tags=tags entry.Tags
+                  Content=entry.Content }
+    }
+
+    let day (entry: Entry) = entry.Date
+
+    let writeadoc (entries: EntriesMap) =
+        use writer =
+            writer "code/codex.adoc"
+        
+        appendHeader writer
+
+        for pair in entries do
+            let struct (month, days) = 
+                (pair.Key, pair.Value)
+            
+            appendMonthSection month writer
+
+            for pair in days do
+                let struct (day, entries) =
+                    (pair.Key, pair.Value)
+                
+                appendDaySection day writer
+
+                for entry in entries do
+                    appendNameSection entry writer
+                    appendContent entry writer
+
+            flush writer
 
 let head _argv =
     let ``content.csv`` = "./data/content.csv"
-    let entries =
+    let es =
         Csv.records<ContentEntryData> ``content.csv``
-        |> contentEntries
+        |> Entry.ofData
+        |> List.ofSeq
 
-    for entry in entries do
-        computeEntry entry
+    (* unique combinations of year and month are used as keys for EntriesMap*)
+    let months = 
+        List.map Entry.day es
+        |> List.map Entry.month
+        |> List.ofSeq
+
+    let entries =
+        EntriesMap(List.length months)
+
+    for month in months do
+        if not <| entries.ContainsKey(month) then
+            entries[month] <- EntryDays(8)
+
+    for e in es do
+        let day = e.Date
+        let month = Entry.month day
+        if not <| entries[month].ContainsKey(day) then
+            entries[month][day] <- Entries(8)
+
+        let entries = entries[month][day]
+        entries.Add(e)
+
+    Entry.writeadoc entries
 
     0
 
