@@ -196,6 +196,7 @@ let head _argv =
         Csv.records<ContentEntryData> ``content.csv``
         |> Entry.ofData
         |> List.ofSeq
+        |> List.rev
 
     (* unique combinations of year and month are used as keys for EntriesMap*)
     let months = 
@@ -211,8 +212,8 @@ let head _argv =
             entries[month] <- EntryDays(8)
 
     for e in es do
-        let day = e.Date
-        let month = Entry.month day
+        let struct (day, month) =
+            (e.Date, Entry.month e.Date)
         if not <| entries[month].ContainsKey(day) then
             entries[month][day] <- Entries(8)
 

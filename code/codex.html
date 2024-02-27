@@ -1,0 +1,5032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Memory Map</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Memory Map</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_2024_feb">2024 Feb</a>
+<ul class="sectlevel2">
+<li><a href="#_02_27">02-27</a>
+<ul class="sectlevel3">
+<li><a href="#_radiant_reverie">Radiant Reverie</a></li>
+</ul>
+</li>
+<li><a href="#_02_24">02-24</a>
+<ul class="sectlevel3">
+<li><a href="#_ifi_ruled_the_world">IfI Ruled the World</a></li>
+<li><a href="#_attitude_readjustment">Attitude readjustment</a></li>
+</ul>
+</li>
+<li><a href="#_02_22">02-22</a>
+<ul class="sectlevel3">
+<li><a href="#_message_for_the_police_politicians_and_billionaire_pharoahs">Message for the police, politicians and billionaire pharoahs</a></li>
+<li><a href="#_dinosaur_mommy">Dinosaur Mommy</a></li>
+<li><a href="#_fraudulent_philanthropy">Fraudulent Philanthropy</a></li>
+</ul>
+</li>
+<li><a href="#_02_20">02-20</a>
+<ul class="sectlevel3">
+<li><a href="#_serpentine_symphony">Serpentine Symphony</a></li>
+</ul>
+</li>
+<li><a href="#_02_19">02-19</a>
+<ul class="sectlevel3">
+<li><a href="#_black_moon">black moon</a></li>
+</ul>
+</li>
+<li><a href="#_02_12">02-12</a>
+<ul class="sectlevel3">
+<li><a href="#_night_drinker">Night-drinker</a></li>
+</ul>
+</li>
+<li><a href="#_02_08">02-08</a>
+<ul class="sectlevel3">
+<li><a href="#_i_the_maize_god">I, the Maize-god</a></li>
+</ul>
+</li>
+<li><a href="#_02_07">02-07</a>
+<ul class="sectlevel3">
+<li><a href="#_cheshire_smile">cheshire smile</a></li>
+<li><a href="#_happiness">Happiness</a></li>
+</ul>
+</li>
+<li><a href="#_02_06">02-06</a>
+<ul class="sectlevel3">
+<li><a href="#_trust_or_deceit">Trust or Deceit</a></li>
+<li><a href="#_i_dont_believe_that_elvis_is_dead">I don’t believe that Elvis is Dead</a></li>
+<li><a href="#_if_i_were_the_federal_government">If I were the Federal Government</a></li>
+</ul>
+</li>
+<li><a href="#_02_05">02-05</a>
+<ul class="sectlevel3">
+<li><a href="#_fuck_the_king">Fuck the King</a></li>
+</ul>
+</li>
+<li><a href="#_02_04">02-04</a>
+<ul class="sectlevel3">
+<li><a href="#_water_and_friends">Water and friends</a></li>
+</ul>
+</li>
+<li><a href="#_02_02">02-02</a>
+<ul class="sectlevel3">
+<li><a href="#_i_walk_for_my_machine">I walk for my machine</a></li>
+<li><a href="#_poor_on_the_rise_rich_on_the_fall">Poor on the Rise, Rich on the Fall</a></li>
+</ul>
+</li>
+<li><a href="#_02_01">02-01</a>
+<ul class="sectlevel3">
+<li><a href="#_wings_fuel_heartbeat_dance">Wings Fuel Heartbeat Dance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2024_jan">2024 Jan</a>
+<ul class="sectlevel2">
+<li><a href="#_01_31">01-31</a>
+<ul class="sectlevel3">
+<li><a href="#_snakes_slithering_underneath_my_skin">Snakes Slithering Underneath My Skin</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2023_dec">2023 Dec</a>
+<ul class="sectlevel2">
+<li><a href="#_12_29">12-29</a>
+<ul class="sectlevel3">
+<li><a href="#_coconut_horse_noises">Coconut horse noises</a></li>
+</ul>
+</li>
+<li><a href="#_12_25">12-25</a>
+<ul class="sectlevel3">
+<li><a href="#_kevin_spacey_is_a_piece_of_shit_with_a_mouth">Kevin spacey is a piece of shit with a mouth</a></li>
+</ul>
+</li>
+<li><a href="#_12_16">12-16</a>
+<ul class="sectlevel3">
+<li><a href="#_jeff_bezos_is_a_piss_boy">Jeff Bezos is a piss boy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2023_nov">2023 Nov</a>
+<ul class="sectlevel2">
+<li><a href="#_11_30">11-30</a>
+<ul class="sectlevel3">
+<li><a href="#_being_consciousness_bliss">Being-Consciousness-Bliss</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2023_sep">2023 Sep</a>
+<ul class="sectlevel2">
+<li><a href="#_09_19">09-19</a>
+<ul class="sectlevel3">
+<li><a href="#_natures_poetry">Nature’s Poetry</a></li>
+</ul>
+</li>
+<li><a href="#_09_18">09-18</a>
+<ul class="sectlevel3">
+<li><a href="#_whispers_in_nights_embrace">Whispers in Night’s Embrace</a></li>
+<li><a href="#_whispers_in_twilight">Whispers in Twilight</a></li>
+<li><a href="#_job_security">Job Security</a></li>
+</ul>
+</li>
+<li><a href="#_09_12">09-12</a>
+<ul class="sectlevel3">
+<li><a href="#_elements_conspiracy">Elements Conspiracy</a></li>
+</ul>
+</li>
+<li><a href="#_09_11">09-11</a>
+<ul class="sectlevel3">
+<li><a href="#_explosive_cyclogenesis">Explosive Cyclogenesis</a></li>
+<li><a href="#_gunslinger_duel">Gunslinger Duel</a></li>
+</ul>
+</li>
+<li><a href="#_09_09">09-09</a>
+<ul class="sectlevel3">
+<li><a href="#_facts">Facts</a></li>
+</ul>
+</li>
+<li><a href="#_09_05">09-05</a>
+<ul class="sectlevel3">
+<li><a href="#_judith_barsi">Judith Barsi</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2023_aug">2023 Aug</a>
+<ul class="sectlevel2">
+<li><a href="#_08_30">08-30</a>
+<ul class="sectlevel3">
+<li><a href="#_canine_confidant_all_dogs_go_to_heaven_chivalrous">Canine Confidant: All Dogs Go To Heaven Chivalrous</a></li>
+<li><a href="#_canine_confidant_all_dogs_go_to_heaven">Canine Confidant: All Dogs Go To Heaven</a></li>
+</ul>
+</li>
+<li><a href="#_08_29">08-29</a>
+<ul class="sectlevel3">
+<li><a href="#_reign_of_avarice">Reign of Avarice</a></li>
+</ul>
+</li>
+<li><a href="#_08_28">08-28</a>
+<ul class="sectlevel3">
+<li><a href="#_asset_unmanagement">Asset Unmanagement</a></li>
+</ul>
+</li>
+<li><a href="#_08_27">08-27</a>
+<ul class="sectlevel3">
+<li><a href="#_idols_can_deceive">Idols Can Deceive</a></li>
+<li><a href="#_confidence_coyote">Confidence Coyote</a></li>
+</ul>
+</li>
+<li><a href="#_08_26">08-26</a>
+<ul class="sectlevel3">
+<li><a href="#_undersea_uproar">Undersea Uproar</a></li>
+<li><a href="#_ceo_salutations">CEO Salutations</a></li>
+<li><a href="#_gravedigger">Gravedigger</a></li>
+</ul>
+</li>
+<li><a href="#_08_25">08-25</a>
+<ul class="sectlevel3">
+<li><a href="#_rotten_pineapple">Rotten Pineapple</a></li>
+<li><a href="#_schizophrenic_confession">"Schizophrenic" Confession</a></li>
+<li><a href="#_rot_in_horrifying_heaven">Rot In Horrifying Heaven</a></li>
+<li><a href="#_four_leaf_clover_incarnate">Four Leaf Clover Incarnate</a></li>
+</ul>
+</li>
+<li><a href="#_08_24">08-24</a>
+<ul class="sectlevel3">
+<li><a href="#_empty_telephone">Empty Telephone</a></li>
+<li><a href="#_skullduggery">Skullduggery</a></li>
+<li><a href="#_banker">Banker</a></li>
+</ul>
+</li>
+<li><a href="#_08_22">08-22</a>
+<ul class="sectlevel3">
+<li><a href="#_roman_empire_system">Roman Empire System</a></li>
+</ul>
+</li>
+<li><a href="#_08_21">08-21</a>
+<ul class="sectlevel3">
+<li><a href="#_get_real_haiku">Get Real Haiku</a></li>
+</ul>
+</li>
+<li><a href="#_08_12">08-12</a>
+<ul class="sectlevel3">
+<li><a href="#_drone_strike_the_cia">Drone Strike the CIA</a></li>
+</ul>
+</li>
+<li><a href="#_08_11">08-11</a>
+<ul class="sectlevel3">
+<li><a href="#_consequences_for_the_crime_of_spider_murder">Consequences for the Crime of Spider Murder</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2023_jun">2023 Jun</a>
+<ul class="sectlevel2">
+<li><a href="#_06_20">06-20</a>
+<ul class="sectlevel3">
+<li><a href="#_silent_observer">Silent Observer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2023_may">2023 May</a>
+<ul class="sectlevel2">
+<li><a href="#_05_17">05-17</a>
+<ul class="sectlevel3">
+<li><a href="#_perplexing_contemplation">Perplexing Contemplation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2023_apr">2023 Apr</a>
+<ul class="sectlevel2">
+<li><a href="#_04_18">04-18</a>
+<ul class="sectlevel3">
+<li><a href="#_apartment_complex_drama">Apartment Complex Drama</a></li>
+</ul>
+</li>
+<li><a href="#_04_15">04-15</a>
+<ul class="sectlevel3">
+<li><a href="#_forgotten_jezebel">Forgotten Jezebel</a></li>
+</ul>
+</li>
+<li><a href="#_04_14">04-14</a>
+<ul class="sectlevel3">
+<li><a href="#_blackmailer_encounter">Blackmailer Encounter</a></li>
+</ul>
+</li>
+<li><a href="#_04_13">04-13</a>
+<ul class="sectlevel3">
+<li><a href="#_elon_musk_jeff_bezos_bill_gates_aka">Elon Musk, Jeff Bezos, Bill Gates AKA</a></li>
+</ul>
+</li>
+<li><a href="#_04_04">04-04</a>
+<ul class="sectlevel3">
+<li><a href="#_blue_whale_blues">Blue Whale Blues</a></li>
+</ul>
+</li>
+<li><a href="#_04_01">04-01</a>
+<ul class="sectlevel3">
+<li><a href="#_drone_strike_operator_diary">Drone Strike Operator Diary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2023_mar">2023 Mar</a>
+<ul class="sectlevel2">
+<li><a href="#_03_29">03-29</a>
+<ul class="sectlevel3">
+<li><a href="#_hey_mom">Hey Mom</a></li>
+<li><a href="#_i_wonder_why">I Wonder Why?</a></li>
+<li><a href="#_what_i_will_do_to_nancy_reagans_corpse">What I will do to Nancy Reagan&#8217;s Corpse</a></li>
+</ul>
+</li>
+<li><a href="#_03_26">03-26</a>
+<ul class="sectlevel3">
+<li><a href="#_all_in_the_game">All in the Game</a></li>
+<li><a href="#_10_crooked_cop_commandments">10 Crooked Cop Commandments</a></li>
+<li><a href="#_carnivorous_predator_diaries_13_00_1007_07">Carnivorous Predator diaries 13.00.10:07.07</a></li>
+</ul>
+</li>
+<li><a href="#_03_25">03-25</a>
+<ul class="sectlevel3">
+<li><a href="#_carnivorous_predator_diaries">Carnivorous Predator Diaries</a></li>
+<li><a href="#_economic_system_blues">Economic System Blues</a></li>
+</ul>
+</li>
+<li><a href="#_03_24">03-24</a>
+<ul class="sectlevel3">
+<li><a href="#_my_fatal_flaw">My Fatal Flaw</a></li>
+<li><a href="#_they_know">They Know</a></li>
+</ul>
+</li>
+<li><a href="#_03_23">03-23</a>
+<ul class="sectlevel3">
+<li><a href="#_hey_cowboy">Hey Cowboy</a></li>
+</ul>
+</li>
+<li><a href="#_03_22">03-22</a>
+<ul class="sectlevel3">
+<li><a href="#_dear_mother_death_rattle">Dear Mother Death Rattle</a></li>
+</ul>
+</li>
+<li><a href="#_03_17">03-17</a>
+<ul class="sectlevel3">
+<li><a href="#_snowflake_drama">Snowflake Drama</a></li>
+<li><a href="#_ignore_the_warning">Ignore the Warning</a></li>
+<li><a href="#_soc_med_compulsion_remedy">Soc Med Compulsion Remedy</a></li>
+</ul>
+</li>
+<li><a href="#_03_16">03-16</a>
+<ul class="sectlevel3">
+<li><a href="#_why_aileen_wournos_took_up_hookin">Why Aileen Wournos took up Hookin</a></li>
+<li><a href="#_race_prejudice">Race Prejudice</a></li>
+</ul>
+</li>
+<li><a href="#_03_15">03-15</a>
+<ul class="sectlevel3">
+<li><a href="#_missed_connection_at_the_florida_drug_house">Missed Connection at the Florida Drug House</a></li>
+</ul>
+</li>
+<li><a href="#_03_13">03-13</a>
+<ul class="sectlevel3">
+<li><a href="#_close_encounter_with_a_penguin_at_the_chain_link_fence">Close Encounter with a Penguin at the Chain Link Fence</a></li>
+<li><a href="#_pyramid_building_pharaoh_fuck">Pyramid Building Pharaoh Fuck</a></li>
+</ul>
+</li>
+<li><a href="#_03_11">03-11</a>
+<ul class="sectlevel3">
+<li><a href="#_oh_indeed">Oh Indeed</a></li>
+</ul>
+</li>
+<li><a href="#_03_10">03-10</a>
+<ul class="sectlevel3">
+<li><a href="#_dirty_cheater_whore_learns_to_say_no_on_13_00_10_06_11">Dirty Cheater Whore learns to say NO on 13.00.10.06.11</a></li>
+</ul>
+</li>
+<li><a href="#_03_09">03-09</a>
+<ul class="sectlevel3">
+<li><a href="#_saudi_arabia_foreign_policy">Saudi Arabia Foreign Policy</a></li>
+<li><a href="#_watch_out_for_toxic_social_media">Watch out for Toxic Social Media</a></li>
+<li><a href="#_all_that_is_sacred">All that is "Sacred"</a></li>
+<li><a href="#_jihad_world">Jihad World</a></li>
+</ul>
+</li>
+<li><a href="#_03_03">03-03</a>
+<ul class="sectlevel3">
+<li><a href="#_words_from_the_jihad_jinni">Words from the Jihad Jinni</a></li>
+</ul>
+</li>
+<li><a href="#_03_02">03-02</a>
+<ul class="sectlevel3">
+<li><a href="#_fate_of_a_torturer">Fate of a Torturer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2023_feb">2023 Feb</a>
+<ul class="sectlevel2">
+<li><a href="#_02_28">02-28</a>
+<ul class="sectlevel3">
+<li><a href="#_maya">Maya</a></li>
+<li><a href="#_select_your_torturer">Select Your Torturer</a></li>
+</ul>
+</li>
+<li><a href="#_02_23">02-23</a>
+<ul class="sectlevel3">
+<li><a href="#_seer">Seer</a></li>
+<li><a href="#_666_sellout">$666 Sellout</a></li>
+</ul>
+</li>
+<li><a href="#_02_22_2">02-22</a>
+<ul class="sectlevel3">
+<li><a href="#_dinosaur_drama">Dinosaur Drama</a></li>
+</ul>
+</li>
+<li><a href="#_02_21">02-21</a>
+<ul class="sectlevel3">
+<li><a href="#_skull_collector">Skull Collector</a></li>
+</ul>
+</li>
+<li><a href="#_02_20_2">02-20</a>
+<ul class="sectlevel3">
+<li><a href="#_cop_encounter_factuality">Cop Encounter Factuality</a></li>
+<li><a href="#_cop_encounter_fantasy">Cop Encounter Fantasy</a></li>
+</ul>
+</li>
+<li><a href="#_02_19_2">02-19</a>
+<ul class="sectlevel3">
+<li><a href="#_why_cant_we_be_friends">Why Can&#8217;t We Be Friends?</a></li>
+</ul>
+</li>
+<li><a href="#_02_18">02-18</a>
+<ul class="sectlevel3">
+<li><a href="#_dinosaur_rendezvous">Dinosaur Rendezvous</a></li>
+<li><a href="#_clever_coyote">Clever Coyote</a></li>
+</ul>
+</li>
+<li><a href="#_02_16">02-16</a>
+<ul class="sectlevel3">
+<li><a href="#_request_for_the_extinction_level_event">Request for the Extinction Level Event</a></li>
+<li><a href="#_ephemeral_boundaries">Ephemeral Boundaries</a></li>
+</ul>
+</li>
+<li><a href="#_02_15">02-15</a>
+<ul class="sectlevel3">
+<li><a href="#_duel_dual_apprehension">Duel Dual Apprehension</a></li>
+</ul>
+</li>
+<li><a href="#_02_14">02-14</a>
+<ul class="sectlevel3">
+<li><a href="#_juice_me_up_with_the_e_meter">Juice Me Up with the E-Meter</a></li>
+<li><a href="#_explosive_cyclogenesis_2">Explosive Cyclogenesis</a></li>
+</ul>
+</li>
+<li><a href="#_02_12_2">02-12</a>
+<ul class="sectlevel3">
+<li><a href="#_first_will_and_testament">First Will and Testament</a></li>
+</ul>
+</li>
+<li><a href="#_02_10">02-10</a>
+<ul class="sectlevel3">
+<li><a href="#_jihad">Jihad</a></li>
+</ul>
+</li>
+<li><a href="#_02_08_2">02-08</a>
+<ul class="sectlevel3">
+<li><a href="#_i_am_the_police">I am the Police</a></li>
+</ul>
+</li>
+<li><a href="#_02_07_2">02-07</a>
+<ul class="sectlevel3">
+<li><a href="#_no_trespassing_private_property">No Trespassing Private Property</a></li>
+</ul>
+</li>
+<li><a href="#_02_04_2">02-04</a>
+<ul class="sectlevel3">
+<li><a href="#_whispers">Whispers</a></li>
+<li><a href="#_fbi_aka">FBI AKA</a></li>
+<li><a href="#_why_wait">Why Wait?</a></li>
+</ul>
+</li>
+<li><a href="#_02_02_2">02-02</a>
+<ul class="sectlevel3">
+<li><a href="#_bug_orgy">Bug Orgy</a></li>
+</ul>
+</li>
+<li><a href="#_02_01_2">02-01</a>
+<ul class="sectlevel3">
+<li><a href="#_execute">Execute</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2023_jan">2023 Jan</a>
+<ul class="sectlevel2">
+<li><a href="#_01_28">01-28</a>
+<ul class="sectlevel3">
+<li><a href="#_taxes">Taxes</a></li>
+</ul>
+</li>
+<li><a href="#_01_21">01-21</a>
+<ul class="sectlevel3">
+<li><a href="#_let_the_oriyans_free">Let the Oriyans free</a></li>
+<li><a href="#_the_police_murdered_elijah">The Police Murdered Elijah</a></li>
+</ul>
+</li>
+<li><a href="#_01_20">01-20</a>
+<ul class="sectlevel3">
+<li><a href="#_call_me_ishmael">Call me Ishmael</a></li>
+<li><a href="#_tell_me_why">Tell Me Why</a></li>
+<li><a href="#_i_pledge_allegiance_to_the_flag">I Pledge Allegiance To The Flag</a></li>
+</ul>
+</li>
+<li><a href="#_01_19">01-19</a>
+<ul class="sectlevel3">
+<li><a href="#_continental_drift">Continental drift</a></li>
+</ul>
+</li>
+<li><a href="#_01_17">01-17</a>
+<ul class="sectlevel3">
+<li><a href="#_lock_you_in_my_womb">Lock you in my Womb</a></li>
+<li><a href="#_blue">Blue</a></li>
+<li><a href="#_rot_in_heaven">Rot In Heaven</a></li>
+</ul>
+</li>
+<li><a href="#_01_13">01-13</a>
+<ul class="sectlevel3">
+<li><a href="#_irony_blood_o2">Irony Blood O2</a></li>
+<li><a href="#_you_will_be_my_blood">You Will Be My Blood</a></li>
+</ul>
+</li>
+<li><a href="#_01_11">01-11</a>
+<ul class="sectlevel3">
+<li><a href="#_dishwasher_drama">Dishwasher Drama</a></li>
+</ul>
+</li>
+<li><a href="#_01_09">01-09</a>
+<ul class="sectlevel3">
+<li><a href="#_consume_the_capitalists">Consume the Capitalists</a></li>
+<li><a href="#_new_mantra">New Mantra</a></li>
+<li><a href="#_cyanwassersauserstoff">Cyanwassersauserstoff</a></li>
+</ul>
+</li>
+<li><a href="#_01_08">01-08</a>
+<ul class="sectlevel3">
+<li><a href="#_corner_of_your_room">Corner of your Room</a></li>
+</ul>
+</li>
+<li><a href="#_01_07">01-07</a>
+<ul class="sectlevel3">
+<li><a href="#_bones_in_the_row_boat">Bones in the Row Boat</a></li>
+<li><a href="#_purple_dinosaur_egg">Purple Dinosaur Egg</a></li>
+</ul>
+</li>
+<li><a href="#_01_06">01-06</a>
+<ul class="sectlevel3">
+<li><a href="#_wheel_well_stowaway">Wheel Well Stowaway</a></li>
+</ul>
+</li>
+<li><a href="#_01_04">01-04</a>
+<ul class="sectlevel3">
+<li><a href="#_saturn">Saturn</a></li>
+<li><a href="#_unicorn">Unicorn</a></li>
+<li><a href="#_bug_man">Bug Man</a></li>
+</ul>
+</li>
+<li><a href="#_01_03">01-03</a>
+<ul class="sectlevel3">
+<li><a href="#_cute_poison_apple">Cute Poison Apple</a></li>
+</ul>
+</li>
+<li><a href="#_01_02">01-02</a>
+<ul class="sectlevel3">
+<li><a href="#_home">Home</a></li>
+</ul>
+</li>
+<li><a href="#_01_01">01-01</a>
+<ul class="sectlevel3">
+<li><a href="#_whale_pact">Whale Pact</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2022_dec">2022 Dec</a>
+<ul class="sectlevel2">
+<li><a href="#_12_28">12-28</a>
+<ul class="sectlevel3">
+<li><a href="#_again">Again</a></li>
+<li><a href="#_identity_crisis">Identity Crisis</a></li>
+</ul>
+</li>
+<li><a href="#_12_27">12-27</a>
+<ul class="sectlevel3">
+<li><a href="#_bolt">Bolt</a></li>
+</ul>
+</li>
+<li><a href="#_12_23">12-23</a>
+<ul class="sectlevel3">
+<li><a href="#_cockroach_sistren">Cockroach Sistren</a></li>
+</ul>
+</li>
+<li><a href="#_12_21">12-21</a>
+<ul class="sectlevel3">
+<li><a href="#_o_fortuna">O Fortuna</a></li>
+<li><a href="#_doors">Doors</a></li>
+<li><a href="#_dear_allfather">Dear AllFather</a></li>
+<li><a href="#_mommy_titty_milk">Mommy Titty Milk</a></li>
+</ul>
+</li>
+<li><a href="#_12_20">12-20</a>
+<ul class="sectlevel3">
+<li><a href="#_roundabout_plagiarist">Roundabout Plagiarist</a></li>
+<li><a href="#_cop_of_existence">Cop of Existence</a></li>
+</ul>
+</li>
+<li><a href="#_12_19">12-19</a>
+<ul class="sectlevel3">
+<li><a href="#_weather_4_u">Weather 4 U</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2022_sep">2022 Sep</a>
+<ul class="sectlevel2">
+<li><a href="#_09_29">09-29</a>
+<ul class="sectlevel3">
+<li><a href="#_all_too_familiar_pattern">All Too Familiar Pattern</a></li>
+</ul>
+</li>
+<li><a href="#_09_26">09-26</a>
+<ul class="sectlevel3">
+<li><a href="#_job_search_rage">Job Search Rage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2022_may">2022 May</a>
+<ul class="sectlevel2">
+<li><a href="#_05_31">05-31</a>
+<ul class="sectlevel3">
+<li><a href="#_alls_well_well_wishes">All&#8217;s Well Well-Wishes</a></li>
+</ul>
+</li>
+<li><a href="#_05_26">05-26</a>
+<ul class="sectlevel3">
+<li><a href="#_shut_your_mouth_police">Shut Your Mouth Police</a></li>
+</ul>
+</li>
+<li><a href="#_05_16">05-16</a>
+<ul class="sectlevel3">
+<li><a href="#_magmatic_teeth">Magmatic Teeth</a></li>
+</ul>
+</li>
+<li><a href="#_05_13">05-13</a>
+<ul class="sectlevel3">
+<li><a href="#_easy_work_day">Easy Work Day</a></li>
+</ul>
+</li>
+<li><a href="#_05_12">05-12</a>
+<ul class="sectlevel3">
+<li><a href="#_life_sentence_no_parole">Life Sentence, No Parole</a></li>
+</ul>
+</li>
+<li><a href="#_05_07">05-07</a>
+<ul class="sectlevel3">
+<li><a href="#_whispering_blue_blazes">Whispering Blue Blazes</a></li>
+</ul>
+</li>
+<li><a href="#_05_02">05-02</a>
+<ul class="sectlevel3">
+<li><a href="#_piggyback_wind">Piggyback Wind</a></li>
+<li><a href="#_message_for_my_current_work_place">Message for my Current Work Place</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2022_apr">2022 Apr</a>
+<ul class="sectlevel2">
+<li><a href="#_04_17">04-17</a>
+<ul class="sectlevel3">
+<li><a href="#_message_for_the_set">Message for the Set</a></li>
+</ul>
+</li>
+<li><a href="#_04_13_2">04-13</a>
+<ul class="sectlevel3">
+<li><a href="#_deer_drama">Deer Drama</a></li>
+<li><a href="#_curvature_of_spacetime">Curvature of Spacetime</a></li>
+</ul>
+</li>
+<li><a href="#_04_11">04-11</a>
+<ul class="sectlevel3">
+<li><a href="#_order_out_of_a_disordered_personality">Order out of a Disordered Personality</a></li>
+<li><a href="#_celestial_bodies">Celestial Bodies</a></li>
+</ul>
+</li>
+<li><a href="#_04_09">04-09</a>
+<ul class="sectlevel3">
+<li><a href="#_naming">Naming</a></li>
+</ul>
+</li>
+<li><a href="#_04_08">04-08</a>
+<ul class="sectlevel3">
+<li><a href="#_wrath_of_the_lamb_translation">Wrath of the Lamb Translation</a></li>
+<li><a href="#_the_big_lie">The Big Lie</a></li>
+</ul>
+</li>
+<li><a href="#_04_07">04-07</a>
+<ul class="sectlevel3">
+<li><a href="#_im_lying">I&#8217;m Lying</a></li>
+<li><a href="#_youre_going_home">You&#8217;re Going Home</a></li>
+</ul>
+</li>
+<li><a href="#_04_06">04-06</a>
+<ul class="sectlevel3">
+<li><a href="#_enjoy_the_sleep_that_never_ends">Enjoy The Sleep That Never Ends</a></li>
+<li><a href="#_multiple_choice">Multiple Choice</a></li>
+</ul>
+</li>
+<li><a href="#_04_04_2">04-04</a>
+<ul class="sectlevel3">
+<li><a href="#_seven_deadly_lullabies_symphony_of_vanity">Seven Deadly Lullabies: Symphony of Vanity</a></li>
+<li><a href="#_message_to_the_microsoft_corporation">Message to the Microsoft Corporation</a></li>
+</ul>
+</li>
+<li><a href="#_04_01_2">04-01</a>
+<ul class="sectlevel3">
+<li><a href="#_et">ET</a></li>
+<li><a href="#_tongue">Tongue?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2022_mar">2022 Mar</a>
+<ul class="sectlevel2">
+<li><a href="#_03_31">03-31</a>
+<ul class="sectlevel3">
+<li><a href="#_surprise_swagger_jack_stick_around_forever">Surprise Swagger Jack Stick Around Forever</a></li>
+<li><a href="#_time_tripping_dragon_thunderbird">Time Tripping Dragon Thunderbird</a></li>
+</ul>
+</li>
+<li><a href="#_03_29_2">03-29</a>
+<ul class="sectlevel3">
+<li><a href="#_story_of_data_absorb_process_psychological_projection_plagiarism">Story Of Data Absorb Process &amp; Psychological Projection &amp; Plagiarism</a></li>
+<li><a href="#_number">Number</a></li>
+</ul>
+</li>
+<li><a href="#_03_28">03-28</a>
+<ul class="sectlevel3">
+<li><a href="#_buzz">Buzz</a></li>
+<li><a href="#_whats_good_in_the_hood">What&#8217;s Good In The Hood</a></li>
+<li><a href="#_evil_says">Evil Says</a></li>
+</ul>
+</li>
+<li><a href="#_03_27">03-27</a>
+<ul class="sectlevel3">
+<li><a href="#_thirst">Thirst</a></li>
+</ul>
+</li>
+<li><a href="#_03_24_2">03-24</a>
+<ul class="sectlevel3">
+<li><a href="#_conversation_with_the_devil">Conversation With The Devil</a></li>
+<li><a href="#_how_are_you">How Are You?</a></li>
+</ul>
+</li>
+<li><a href="#_03_23_2">03-23</a>
+<ul class="sectlevel3">
+<li><a href="#_fear_not">!FEAR NOT</a></li>
+</ul>
+</li>
+<li><a href="#_03_22_2">03-22</a>
+<ul class="sectlevel3">
+<li><a href="#_ice_cream">Ice Cream</a></li>
+<li><a href="#_recipe_for_the_future">Recipe For The Future</a></li>
+</ul>
+</li>
+<li><a href="#_03_20">03-20</a>
+<ul class="sectlevel3">
+<li><a href="#_queen_bee_is_always_awake">Queen Bee Is Always Awake</a></li>
+<li><a href="#_houseplant">Houseplant</a></li>
+</ul>
+</li>
+<li><a href="#_03_19">03-19</a>
+<ul class="sectlevel3">
+<li><a href="#_cowboy">Cowboy</a></li>
+</ul>
+</li>
+<li><a href="#_03_17_2">03-17</a>
+<ul class="sectlevel3">
+<li><a href="#_still_a_virgin">Still A Virgin</a></li>
+</ul>
+</li>
+<li><a href="#_03_14">03-14</a>
+<ul class="sectlevel3">
+<li><a href="#_vice_versa">Vice Versa</a></li>
+<li><a href="#_ms_pac_man">Ms.Pac-Man</a></li>
+</ul>
+</li>
+<li><a href="#_03_13_2">03-13</a>
+<ul class="sectlevel3">
+<li><a href="#_tired_of_blame_games">Tired Of Blame Games</a></li>
+<li><a href="#_bike">Bike</a></li>
+<li><a href="#_i_dont_have_any_blues">I Don&#8217;t Have Any Blues</a></li>
+</ul>
+</li>
+<li><a href="#_03_11_2">03-11</a>
+<ul class="sectlevel3">
+<li><a href="#_what_do_i_want">What Do I Want?</a></li>
+</ul>
+</li>
+<li><a href="#_03_09_2">03-09</a>
+<ul class="sectlevel3">
+<li><a href="#_march_didnt_sabotage_my_plans_after_all">March Didn&#8217;t Sabotage My Plans After All</a></li>
+</ul>
+</li>
+<li><a href="#_03_08">03-08</a>
+<ul class="sectlevel3">
+<li><a href="#_disappear_undisappear">Disappear Undisappear</a></li>
+<li><a href="#_weather_so_naughty">Weather So Naughty</a></li>
+<li><a href="#_spring">Spring</a></li>
+</ul>
+</li>
+<li><a href="#_03_07">03-07</a>
+<ul class="sectlevel3">
+<li><a href="#_dolphins">Dolphins</a></li>
+</ul>
+</li>
+<li><a href="#_03_06">03-06</a>
+<ul class="sectlevel3">
+<li><a href="#_success_is_futile">Success Is Futile</a></li>
+</ul>
+</li>
+<li><a href="#_03_04">03-04</a>
+<ul class="sectlevel3">
+<li><a href="#_witchcraft">Witchcraft</a></li>
+</ul>
+</li>
+<li><a href="#_03_03_2">03-03</a>
+<ul class="sectlevel3">
+<li><a href="#_message_to_the_wind_in_her_infinite_mercy">Message to the Wind in Her Infinite Mercy</a></li>
+</ul>
+</li>
+<li><a href="#_03_01">03-01</a>
+<ul class="sectlevel3">
+<li><a href="#_i_pray_to_god_i_lose_my_job">I Pray To God I Lose My Job</a></li>
+<li><a href="#_purple">Purple</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_2022_feb">2022 Feb</a>
+<ul class="sectlevel2">
+<li><a href="#_02_28_2">02-28</a>
+<ul class="sectlevel3">
+<li><a href="#_love_letter_to_yahweh">Love Letter to Yahweh</a></li>
+</ul>
+</li>
+<li><a href="#_02_27_2">02-27</a>
+<ul class="sectlevel3">
+<li><a href="#_go_waste_your_time_doing_whatever_the_hell_you_want">Go waste your time doing whatever the hell you want</a></li>
+<li><a href="#_you_may_take_your_silence_with_you_to_the_graveyard">You may take your silence with you to the graveyard</a></li>
+<li><a href="#_did_you_trash_yourself_again">Did You Trash Yourself Again?</a></li>
+<li><a href="#_dying_is_so_easy">Dying Is So Easy</a></li>
+<li><a href="#_civilization_is_so_civilized">Civilization is so Civilized</a></li>
+<li><a href="#_march_sabotaged_my_plans">March sabotaged my plans</a></li>
+<li><a href="#_love_letter_to_odin">Love Letter to Odin</a></li>
+</ul>
+</li>
+<li><a href="#_02_02_3">02-02</a>
+<ul class="sectlevel3">
+<li><a href="#_youre_going_home_2">You&#8217;re Going Home</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_2024_feb">2024 Feb</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_02_27">02-27</h3>
+<div class="sect3">
+<h4 id="_radiant_reverie">Radiant Reverie</h4>
+<div class="paragraph">
+<p>In hues, behold the rainbow&#8217;s waltz,<br>
+Exquisite enchantment, my heart exalts.<br>
+Such magic, mine, to savor and see,<br>
+This moment, a gift, bestowed to me.<br>
+<br>
+The heavens adorn in a splendid array,<br>
+And in this beauty, I find my own way.<br>
+For the magic of the rainbow, for all to see,<br>
+Is a treasure bestowed, exclusively for me.<br>
+<br>
+The colors swirl in a magnificent display,<br>
+In this realm of wonder, I hold sway.<br>
+For in this realm of enchantment, I decree,<br>
+The magic of the rainbow is meant for me.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_24">02-24</h3>
+<div class="sect3">
+<h4 id="_ifi_ruled_the_world">IfI Ruled the World</h4>
+<div class="paragraph">
+<p>I&#8217;d pay every single human being in hard cash<br>
+For the simple fact of existing<br>
+Why? Because I love you so much<br>
+If you don&#8217;t like it<br>
+Don&#8217;t take it<br>
+Opt out<br>
+Tell me to shove it<br>
+Nobody is forcing you to do anything<br>
+Fool</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_attitude_readjustment">Attitude readjustment</h4>
+<div class="paragraph">
+<p>Dear Dad,<br>
+<br>
+If you ever need an "attitude readjustment" hit me up!<br>
+I will not hesitate to slap the shit out of your bony white ass with the fly swatter!<br>
+Hope you&#8217;re doing well.<br>
+<br>
+Love,<br>
+Your son</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_22">02-22</h3>
+<div class="sect3">
+<h4 id="_message_for_the_police_politicians_and_billionaire_pharoahs">Message for the police, politicians and billionaire pharoahs</h4>
+<div class="paragraph">
+<p>I love you<br>
+I want to make love to you<br>
+After you die<br>
+I&#8217;m going to stick it in</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dinosaur_mommy">Dinosaur Mommy</h4>
+<div class="paragraph">
+<p>I taketh a humble spud in hand<br>
+And with grace, I ingest its bounty grand<br>
+In my vision, it transforms, an egg divine<br>
+A dragon&#8217;s seed, within my form to shine<br>
+Incubated within, noble creatures rise<br>
+Pterodactyls, gallant, take to the skies<br>
+CAWW CAWW</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fraudulent_philanthropy">Fraudulent Philanthropy</h4>
+<div class="paragraph">
+<p>Upon Aztec pyramid&#8217;s<br>
+peak so steep<br>
+Bill Gates faces a choice<br>
+Karma to reap<br>
+<br>
+Renounce his riches<br>
+Or face the sun&#8217;s wrath<br>
+A decision made<br>
+On the ancient path<br>
+<br>
+To Christ Jesus' footsteps<br>
+He acquiesced<br>
+Fame and wealth abandoned<br>
+His soul addressed<br>
+<br>
+"You are now the saint<br>
+That you feigned to be<br>
+You with your<br>
+Fraudulent philanthropy"</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_20">02-20</h3>
+<div class="sect3">
+<h4 id="_serpentine_symphony">Serpentine Symphony</h4>
+<div class="paragraph">
+<p>In the depths of the shadows<br>
+Where moonlight fades<br>
+Sssilent ssserpents<br>
+Ssslither in the whispering glades<br>
+Their ssscales are a-gleaming<br>
+A subtle sssecret dance<br>
+A sssymphony of ssslithering<br>
+Ssserpentine romance<br>
+<br>
+Through wild winding paths<br>
+They do gently glide<br>
+In the twilight&#8217;s embrace<br>
+There they do confide<br>
+Whispers of the night<br>
+A sssneaky sssubtle hissss<br>
+In the language of the sssnakes<br>
+They do reminisssce<br>
+<br>
+Their eyes like jewels<br>
+Gleam glowing in the dark<br>
+As they move with a grace<br>
+Leaving their slithery mark<br>
+In the sssilence of the night<br>
+they do sssneak and ssspeak<br>
+In a tongue unknown<br>
+Magic mystique they sseek<br>
+<br>
+Oh! sssilent ssslithering ssserpents<br>
+Guardians of the night<br>
+In your curving coils<br>
+there is a majestic delight<br>
+In your dazzling dance<br>
+There is a sacred art<br>
+A sssymphony of ssserpents<br>
+Oh so close to my heart<br>
+<br>
+So let us join with them<br>
+In their ssslumber oh so deep<br>
+In the realm of dusky dreams<br>
+Where secrets they do keep<br>
+For in the language of sssnakes we do find<br>
+A world of marvelous magic, mesmerized<br>
+<br>
+🐍</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_19">02-19</h3>
+<div class="sect3">
+<h4 id="_black_moon">black moon</h4>
+<div class="paragraph">
+<p>dark side of the moon<br>
+forever unfazed, unseen<br>
+in stillness, I dwell</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_12">02-12</h3>
+<div class="sect3">
+<h4 id="_night_drinker">Night-drinker</h4>
+<div class="paragraph">
+<p>Night-drinker, they say<br>
+Mists and vapors from the moon<br>
+Nourish growth unseen</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_08">02-08</h3>
+<div class="sect3">
+<h4 id="_i_the_maize_god">I, the Maize-god</h4>
+<div class="paragraph">
+<p>Crossroads of my fate<br>
+I, the Maize-god amidst ways<br>
+Which path shall I take?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_07">02-07</h3>
+<div class="sect3">
+<h4 id="_cheshire_smile">cheshire smile</h4>
+<div class="paragraph">
+<p>your face makes an impression<br>
+on the entire atmosphere<br>
+the size of this universe<br>
+and so, I send my smile out<br>
+to eternity in all directions<br>
+🌙</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_happiness">Happiness</h4>
+<div class="paragraph">
+<p>They will never take my pride or happiness away from me no matter what they do<br>
+You can put me in Auschwitz and I&#8217;ll still have a wicked grin<br>
+Mouthing off to Nazis is my sole delight<br>
+Slice my tongue out<br>
+Open up my chest<br>
+And cut my vocal chords out from under neath my skin<br>
+And I&#8217;ll still win</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_06">02-06</h3>
+<div class="sect3">
+<h4 id="_trust_or_deceit">Trust or Deceit</h4>
+<div class="paragraph">
+<p>Two faces of coin,<br>
+Trust&#8217;s gleam or deceit&#8217;s shadow.<br>
+Which fate do you own?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_i_dont_believe_that_elvis_is_dead">I don’t believe that Elvis is Dead</h4>
+<div class="paragraph">
+<p>Elvis, still whispers,<br>
+In Memphis nights, legends thrive,<br>
+Forever alive.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_if_i_were_the_federal_government">If I were the Federal Government</h4>
+<div class="paragraph">
+<p>I would love nothing more than to completely smash and obliterate Microsoft Corp and Bill Gates<br>
+Using only words from my mouth<br>
+Amazon because they force people to piss in water bottles. Jeff Bezos is a piss boy<br>
+I&#8217;d execute Kevin Spacey<br>
+All the other Epstein creeps<br>
+Hang em all<br>
+A gift for the gallows<br>
+I&#8217;d sentence all of congress to hard labor<br>
+60 hours a week with the shittiest health insurance<br>
+I bet you they&#8217;d change the minimum wage from $7.75 an hour after a month of that<br>
+Then I&#8217;d abolish congress<br>
+Then I&#8217;d be the only one left with a bad personality<br>
+I leave that to common people<br>
+To dispense with as they see fit</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_05">02-05</h3>
+<div class="sect3">
+<h4 id="_fuck_the_king">Fuck the King</h4>
+<div class="paragraph">
+<p>King Charles has cancer<br>
+Hooray<br>
+Die soon<br>
+Old prick</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_04">02-04</h3>
+<div class="sect3">
+<h4 id="_water_and_friends">Water and friends</h4>
+<div class="paragraph">
+<p>Water and friends,<br>
+Riches of the heart, fulfilled<br>
+Together they thrive.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_02">02-02</h3>
+<div class="sect3">
+<h4 id="_i_walk_for_my_machine">I walk for my machine</h4>
+<div class="paragraph">
+<p>Bytes whisper softly,<br>
+Footsteps hum in code&#8217;s embrace,<br>
+Machine and I stride.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_poor_on_the_rise_rich_on_the_fall">Poor on the Rise, Rich on the Fall</h4>
+<div class="paragraph">
+<p>Beneath fortune&#8217;s weight<br>
+Hope blooms in poverty&#8217;s soil<br>
+Rise, resilient hearts</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_01">02-01</h3>
+<div class="sect3">
+<h4 id="_wings_fuel_heartbeat_dance">Wings Fuel Heartbeat Dance</h4>
+<div class="paragraph">
+<p>Wings beat in rhythm<br>
+Life&#8217;s pulse fueled by fluttering<br>
+Heart echoes their dance</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2024_jan">2024 Jan</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_01_31">01-31</h3>
+<div class="sect3">
+<h4 id="_snakes_slithering_underneath_my_skin">Snakes Slithering Underneath My Skin</h4>
+<div class="paragraph">
+<p>Beneath my surface<br>
+snakes weave silent whispers, coiled<br>
+skin echoes their hiss</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2023_dec">2023 Dec</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_12_29">12-29</h3>
+<div class="sect3">
+<h4 id="_coconut_horse_noises">Coconut horse noises</h4>
+<div class="paragraph">
+<p>Coconuts collide<br>
+Hooves in rhythmic harmony<br>
+Horse-like echoes dance</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_12_25">12-25</h3>
+<div class="sect3">
+<h4 id="_kevin_spacey_is_a_piece_of_shit_with_a_mouth">Kevin spacey is a piece of shit with a mouth</h4>
+<div class="paragraph">
+<p>Kevin spacey is a piece of shit with a mouth<br>
+Yap yap yap goes the unentertaining drivel that spills out of his shit mouth<br>
+"Not afraid to push our country in the right direction" the piece of shit says<br>
+Why not push you<br>
+Into an early grave?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_12_16">12-16</h3>
+<div class="sect3">
+<h4 id="_jeff_bezos_is_a_piss_boy">Jeff Bezos is a piss boy</h4>
+<div class="paragraph">
+<p>In cosmic realms where stars align,<br>
+Bezos' ships lack bathrooms, design.<br>
+No toilets there, a curious feat,<br>
+Like Amazon tales, where woes repeat.<br>
+<br>
+In zero gravity&#8217;s silent spree,<br>
+Bottles shared, afloat in the esprit.<br>
+Drops bounce, a weightless ballet,<br>
+A spectacle strange in the Milky Way.<br>
+<br>
+Jeff takes a sip, unfazed and bold,<br>
+From bottles filled with stories untold.<br>
+No bathrooms here, a peculiar scheme,<br>
+In this cosmic journey, where stars gleam.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2023_nov">2023 Nov</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_11_30">11-30</h3>
+<div class="sect3">
+<h4 id="_being_consciousness_bliss">Being-Consciousness-Bliss</h4>
+<div class="paragraph">
+<p>光は単純 (Hikari wa tanjun)<br>
+均質なるものよ (Kinshitsunaru mono yo)<br>
+意識至福 (Ishiki shifuku)<br>
+<br>
+Light so simple, pure<br>
+Homogeneous entity<br>
+Bliss births consciousness</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2023_sep">2023 Sep</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_09_19">09-19</h3>
+<div class="sect3">
+<h4 id="_natures_poetry">Nature’s Poetry</h4>
+<div class="paragraph">
+<p>青空広がる (Aozora hirogaru)<br>
+風がさらさら (Kaze ga sarasara)<br>
+自然の詩 (Shizen no uta)<br>
+<br>
+Wide blue sky above,<br>
+Breezes whispering gently,<br>
+Nature&#8217;s poetry.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_09_18">09-18</h3>
+<div class="sect3">
+<h4 id="_whispers_in_nights_embrace">Whispers in Night’s Embrace</h4>
+<div class="paragraph">
+<p>In the realm of shadows and secrets, where truth&#8217;s veil is thin,<br>
+You believe what you want, in the whispers of the night,<br>
+Whatever is told into your ear, by the bedside pillow&#8217;s side,<br>
+Is it true, the things you say, when I&#8217;m absent from your sight?<br>
+<br>
+In the tapestry of dreams and hushed desires we weave,<br>
+In the hush of darkness, where confessions softly fall,<br>
+You hold my words like treasures, in the chambers of your heart,<br>
+But when I&#8217;m far from your embrace, do they still hold their thrall?<br>
+<br>
+In the stillness of those moments, when the world is fast asleep,<br>
+In the cradle of night&#8217;s silence, where fantasies take flight,<br>
+You speak of me with passion, in the quietude of dreams,<br>
+Is it true, the things you say, when I&#8217;m absent from your sight?<br>
+<br>
+Though the night may shroud our secrets, and the stars their witness be,<br>
+In the realm of midnight whispers, where the moon her soft glow lends,<br>
+Do you ever doubt the stories, woven by our hearts and minds,<br>
+Is it true, the things you say, when I&#8217;m absent from your sight?<br>
+<br>
+In the morning&#8217;s gentle waking, as the night&#8217;s enchantment fades,<br>
+In the light of a new day, where truth must take its stand,<br>
+Do you still believe the stories, spun in darkness and in dreams,<br>
+Is it true, the things you say, when I&#8217;m absent from your sight?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_whispers_in_twilight">Whispers in Twilight</h4>
+<div class="paragraph">
+<p>In twilight&#8217;s quiet, thoughts do softly creep<br>
+Beliefs formed from secrets on night&#8217;s pillow<br>
+In murmured words, a web of whispers spun<br>
+Is it the truth, your tongue speaks when I&#8217;m not near?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_job_security">Job Security</h4>
+<div class="paragraph">
+<p>deception for gain<br>
+lies for war, pockets filled deep<br>
+job security</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_09_12">09-12</h3>
+<div class="sect3">
+<h4 id="_elements_conspiracy">Elements Conspiracy</h4>
+<div class="paragraph">
+<p>water, air entwined<br>
+secrets in their cosmic dance<br>
+conspiracy&#8217;s breath</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_09_11">09-11</h3>
+<div class="sect3">
+<h4 id="_explosive_cyclogenesis">Explosive Cyclogenesis</h4>
+<div class="paragraph">
+<p>Deep cyclone takes form<br>
+Explosive cyclogenesis<br>
+Nature&#8217;s fierce embrace</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gunslinger_duel">Gunslinger Duel</h4>
+<div class="paragraph">
+<p>Amidst the eternal feud that had sundered a once-tight-knit community, the tension had reached its cataclysmic zenith. This bitter animosity, smoldering for decades, thrived on a venomous brew of loathing and vengeance that coursed through the veins of two individuals, corroding their very souls.<br>
+<br>
+The townsfolk, their faces etched with despair, gathered to bear witness to the apocalyptic climax they had dreaded. The setting sun cast long, skeletal shadows that clawed at the landscape, presaging the inexorable confrontation. In the heart of this forsaken Wild West outpost, the air hung heavy with the scent of doom, the searing heat a malevolent accomplice to the impending tragedy.<br>
+<br>
+The two archenemies stood like silhouettes from a fevered nightmare, a mere twenty strides apart, within a makeshift arena birthed from despair. Their eyes locked, twin abysses brimming with an ancient hatred that pulsed like a malignant heart. Six-shooters dangled ominously from their calloused fingers, relics of an era long gone, poised to usher one or perhaps both of them into the yawning abyss.<br>
+<br>
+As the forlorn crowd awaited the officiator&#8217;s pronouncement, a tempest of rage seized one of the combatants. Time itself recoiled as, in a breathless instant, they raised their weapon and discharged a single, deafening shot. The roar echoed through the desolation, and the world slowed to a grim tableau as the bullet found its mark, a grimace of death. The other man, his face a mask of gruesome horror, crumpled to the sanguine-stained earth.<br>
+<br>
+A shocked gasp rippled through the bystanders, a ghostly echo amidst the gathering darkness. It was a ruthless, brutish conclusion to an epoch-spanning feud.<br>
+<br>
+The triumphant gunslinger, their demeanor icy and calculated, turned to confront the stupefied onlookers. "Seems we had ourselves a duel," they declared, voice forged in the crucible of annihilation, laced with sardonic jest. "Anybody else got another story they want to tell?"<br>
+<br>
+With an insouciant flourish, they swept their firearm in a sinister arc, bearing witness to the fragile tremor in the crowd. Fear, like a spectral leviathan, ensnared the spectators, scattering them like fragments in a howling tempest, fleeing the icy, predatory gaze of the victorious figure.<br>
+<br>
+"Is this situation resolved?" the conqueror inquired, the question a weighty specter hanging over the desolation. No answer stirred the air, only silence and the lingering miasma of gunpowder.<br>
+<br>
+The conflict had indeed concluded, but it was an ending veiled in obsidian, imprinting an indelible scar upon the town, an eternal testament to the horrors of that dread-riddled day.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_09_09">09-09</h3>
+<div class="sect3">
+<h4 id="_facts">Facts</h4>
+<div class="paragraph">
+<p>Fact 0: I owe you zero.<br>
+Fact 1: You owe me none.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_09_05">09-05</h3>
+<div class="sect3">
+<h4 id="_judith_barsi">Judith Barsi</h4>
+<div class="paragraph">
+<p>Childhood&#8217;s tragic tale<br>
+Abuse, silence, no escape<br>
+Love from the screen&#8217;s glow</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2023_aug">2023 Aug</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_08_30">08-30</h3>
+<div class="sect3">
+<h4 id="_canine_confidant_all_dogs_go_to_heaven_chivalrous">Canine Confidant: All Dogs Go To Heaven Chivalrous</h4>
+<div class="paragraph">
+<p>In the luminous tapestry of "All Dogs Go To Heaven," an unsettling chronicle unfolds. At the outset, the honorable Sir Charlie emerges, yet veiled in the fog of unwittingness regarding a conflict that beckons. A treacherous web woven by the ignoble Sir Carface ensnares Charlie, casting him into a dungeon of despair and looming mortality. His trusty comrade, Itchy, employing the mystical power of water&#8217;s pressure, mounts a daring rescue.<br>
+<br>
+Amidst the panorama of existence, a realm of canine camaraderie materializes, wherein the hounds partake in revelries of spirits and games of chance. Here, within the fabric of this world, the symphony of life&#8217;s struggles unfolds, a rat race culminating with a triumphant police rat. At the heart of this realm, Sir Charlie&#8217;s charisma radiates, and his steadfast ally, Itchy, stands resolute at his side, fortifying him in his endeavors.<br>
+<br>
+Emerging from his incarcerative ordeal, Sir Charlie&#8217;s pursuit of reconnection with Carface is motivated by the siren&#8217;s call of pecuniary aspirations. Yet, veiled from him is the insidious hand that once condemned him. Carface, an embodiment of avarice, conceals treacherous motives, seeking to rend their partnership asunder and withhold rightful dues. A partnership once harmonious, now sullied by betrayal&#8217;s stain.<br>
+<br>
+The saga progresses, as Charlie, ensnared by the seductive allure of fleeting pleasures, rekindles ties with Carface, severing the bonds of camaraderie with Itchy. The path he treads is cloaked in inebriation, whether fueled by naïveté or an audacious disregard for the looming specter of treachery. The choices made by a beleaguered hero lay the foundation for impending trials.<br>
+<br>
+Enter Anne Marie, a tragic figure, an orphan with an uncanny ability to converse with creatures great and small. A captive of Carface&#8217;s nefarious grasp, Anne Marie endures dehumanization at the paws of her captors, referred to as a mere "it" and "monster." A pawn in Carface&#8217;s unquenchable thirst for victory, her gift exploited mercilessly, she yearns for naught but the simplest of joys—a moment outdoors, basking in the gentle embrace of the sun.<br>
+<br>
+Within this intricate dance of fate, Sir Charlie&#8217;s missteps become evident. Unknowingly, he mirrors Carface&#8217;s malevolence, oblivious to the precipice upon which he teeters. A lack of awareness obscures his view of the truth; the specter of betrayal lingers like a dormant serpent, waiting to strike.<br>
+<br>
+Carface&#8217;s parting gesture, a golden timepiece, veils insidious intentions. Cloaked in cowardice, Carface&#8217;s canine confidant becomes the harbinger of treacherous doom, orchestrating Charlie&#8217;s fall by mechanized canine vehemence. In this orchestration, time yields to its own unraveling, weaving the threads of destiny with clockwork precision.<br>
+<br>
+In the realm of dreams, the slumbering Itchy is confronted by nightmarish visions, wherein Carface&#8217;s grasp tightens around his very throat. An allegory emerges, a reflection of the abyss into which vengeance casts its ensnared souls. While Itchy strives to extricate himself from this shadow, Charlie remains entrapped, a prisoner of vengeance&#8217;s allure.<br>
+<br>
+A fateful encounter with Anne Marie propels Charlie down a perilous path, cloaked in the illusion of salvation. Irony pervades, for a savior and a captive merge, each enshrouded in a cloak of duplicity. With pecuniary desires ablaze in his eyes, Charlie ensnares Anne Marie, placing his aspirations before her well-being.<br>
+<br>
+A dance of manipulation unfolds, as Charlie coerces Anne Marie to yield her unique talents. She, an innocent lamb, is seduced into this grim pas de deux, her desires left unheeded, her heart yearning for parental warmth. The echoes of Carface&#8217;s machinations resonate in Charlie&#8217;s manipulation, his actions eerily akin to the one he abhors.<br>
+<br>
+Anne Marie&#8217;s gifts, a tapestry woven with threads of nature&#8217;s language, unravel a tale of revelations yet hewn from the secrets whispered by creatures unseen. In this symphony of whispers, Charlie emerges as the orchestrator of a symphony wherein Anne Marie plays the poignant role of the key.<br>
+<br>
+In matters of the heart, Anne Marie yearns for nurturing, the embrace of a mother and father. Yet, as the curtain unfurls, Charlie&#8217;s actions are colored by his own apprehensions, for he dreads naught more than solitude&#8217;s grip. An ill-fated sentiment emerges, a yearning to stave off the void at the expense of her well-being.<br>
+<br>
+Amidst these convoluted currents, Anne Marie becomes a vessel of foresight, predicting fortunes yet unspun. Yet, as the gears of manipulation grind ceaselessly, Anne Marie&#8217;s needs become a mere afterthought, eclipsed by the shadow of selfish intent. A symphony wherein the conductor craves his notes more than the harmony they yield.<br>
+<br>
+The distaste for physical affection held by Charlie contrasts starkly with his proclivity for identifying Anne Marie&#8217;s unease. His actions waver between mending her discomfort and perpetuating his schemes. Anne Marie, indignant and assertive, becomes the lighthouse guiding the tumultuous currents of their entwined fate.<br>
+<br>
+As the web of deceit unravels, the specter of Charlie&#8217;s past transgressions emerges. A stolen wallet, a fragment of forgotten choices, returns as an apparition of remorse. In this realm of ethereal visions, Charlie confronts his inner demons, facing the flames of retribution, an inferno fueled by guilt.<br>
+<br>
+The tether to virtue pulls Anne Marie away, her choice to amend her own path, to seek the embrace of prospective parents, emblematic of her yearning for an authentic haven. This choice, a blossom of hope, blooms in contrast to the desolate shadows cast by Charlie&#8217;s past transgressions.<br>
+<br>
+Yet, a tempest of treachery and turmoil stirs anew, as Carface&#8217;s wrath materializes in a ray gun&#8217;s fiery blaze. The cowardice that festers in Carface&#8217;s heart blinds him to his own malevolent designs, casting him as puppet master, content to orchestrate the dance from the shadows.<br>
+<br>
+With destiny&#8217;s wheels spinning toward their zenith, Sir Charlie and Anne Marie find themselves ensnared in a confrontation with the specter of Death—a fearsome alligator whose voice heralds the grave&#8217;s embrace. Charlie, spared by virtue of his voice&#8217;s enchanting melody, stands at the threshold of transformation.<br>
+<br>
+Within the crucible of this moment, the tapestry of Charlie&#8217;s evolution unfolds. A metamorphosis blooms, a departure from his alliance with Carface&#8217;s malevolence. The convergence of forces, the clash of light and shadow, propel him toward a decision of utmost significance.<br>
+<br>
+Yet, turmoil and discord erupt as Itchy confronts Charlie&#8217;s devotion to Anne Marie. The echoes of Carface&#8217;s cruelty resound, as Charlie spews words of callous dismissal. His fall from grace, a lamentable surrender to his own baser nature, is a reality that Anne Marie confronts with piercing clarity.<br>
+<br>
+In a final crescendo, the strands of destiny converge, as Anne Marie is ensnared once more by Carface&#8217;s clutches. At this pivotal juncture, the facets of Charlie&#8217;s path coalesce, for redemption beckons through the avenue of ultimate sacrifice. A selfless act of valor births his reclamation.<br>
+<br>
+With poignant words of encouragement, Charlie imparts his blessing upon Anne Marie, casting himself into the abyss to shield her from peril. As he ascends toward the realm of the eternal, his valor immortalized, a chapter closes, leaving behind a legacy woven with honor, sacrifice, and the resounding echo of chivalry&#8217;s call.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_canine_confidant_all_dogs_go_to_heaven">Canine Confidant: All Dogs Go To Heaven</h4>
+<div class="paragraph">
+<p>All Dogs Go To Heaven is a terrifying movie. It begins, there is a conflict between Charlie &amp; Carface. Charlie begins the movie unconscious of the conflict. He had been set up by Carface, sent to prison and was awaiting the death sentence. His friend Itchy busted him out using the power of water pressure.<br>
+<br>
+We&#8217;re then introduced to dog society where mostly what appear to be man dogs drinking and gambling, mostly losing. There&#8217;s a rat race and the rat that wins is the police rat. Charlie is clearly charming and itchy his his right hand, backs him up in all his endeavors. <br>
+<br>
+On getting out of prison, Charlie wants to reconnect with Carface because he&#8217;s only interested in doing "business" and making lots of money. He&#8217;s unaware that it was Carface who sent him to death row. Carface is avarice incarnate, he wanted to split the partnership with Charlie and not give him 50% of the loot. If he wanted to split the partnership, he should have just bit the apple and accepted the loss. <br>
+<br>
+The story progresses, Charlie reconnects with Carface and disconnects from Itchy. He decides to get drunk in bad company. He either believes Carface is going to hand over 50%, or he knows Carface is going to kill him and doesn&#8217;t even care. <br>
+<br>
+Itchy wanders seeking Charlie and finds the tragic orphan, Anne Marie, imprisoned by Carface. She is refereed to by the dogs who guard her as an "it" and a "monster". Carface needs information from her, about who is going to win the races because she has the ability to communicate with all species of animals. Dogs can only speak their own tongue. Carface is obsessed with winning, always winning, rigging all the odds of his casino in his own favor at the expense &amp; deteriorating health of the paying customers. He sadistically uses the child Anne Marie to satisfy his own needs and does not give her anything in return (she asks to go outside). He makes his right hand "feed the kid" because he&#8217;s too lazy and inept to do anything himself.<br>
+<br>
+Charlie&#8217;s mistake was he was not fighting back against Carface, he was even going so far as to unconsciously mimic his behavior. If he knew the truth why did he think that he was gonna get 50%? Becoming split up with Itchy helped his downfall. Itchy would have continually warned him how he did not like the situation.<br>
+<br>
+Carface Gives Charlie with a gold watch as a parting gift. Carface is too cowardly to do his own dirty work so he has his right hand kill Charlie using vehicular dog slaughter. He dies and goes to heaven, where everything is known before it happens and there are no surprises. He has the gold watch Carface gave him still but it has stopped ticking. He turns back time and the clock starts ticking again and he goes back to where he was killed, in the Louisiana bay.<br>
+<br>
+Charlie, fallen from grace, vows revenge. Itchy is sleeping and having a nightmare of being choked by Carface but it is Charlie waking him. In this symbol there is deep significance involved, in who Charlie is unconsciously identified with when he won&#8217;t give up his revenge obsession. Itchy doesn&#8217;t want revenge and just wants to move on, thankful to be alive but Charlie is too fallen and feels a twisted urge to make Carface suffer. <br>
+<br>
+Charlie kidnap+cons Anne Marie under the guise of a rescuer. Ironic that he kidnapped a kidnapped child. He has dollar signs in his eyeballs and clearly places satisfying his needs before Anne Marie&#8217;s. He is not very fatherly. Charlie even smiles a wicked grin when it&#8217;s revealed by Anne Marie that she&#8217;s an orphan, knowing this will make it easier to manipulate her.  Charlie is like Carface in that he has Itchy do tasks he feels are beneath him. He asks Itchy to let her sleep at his place, which Itchy denies and Charlie says that she can come to his place.<br>
+<br>
+Carface finds out Anne Marie is kidnapped and becomes enraged. He is confused, claiming he loves the girl when he clearly only loves money she gives him with her ability. How long can you convince her to give you information? She is only getting older and smarter but in his head he can "own" her. <br>
+<br>
+Charlie is clearly annoyed by having to be a parent to Anne Marie. Anne Marie communicates clearly that she needs a mom &amp; dad. Charlie ends up doing to her exactly what Carface does, con her into revealing information about who is going to win a horse race. Charlie is running a scheme to utilize her ability to make money for himself under the guise of being robin hood and giving the money to the poor. Anne Marie is clearly upset about it but Anne Marie negotiates until she accepts and finds out what he needs. Charlie uses the line "if you&#8217;re serious about this mom and dad business" which is telling of his emotional state. In his mind he does not want Anne Marie to be serious about it because then he&#8217;d be left alone to fend for himself and in his head that terrifies him and he feels threatened.<br>
+<br>
+Anne Marie&#8217;s ability is clearly very powerful, she can foretell surprises/events using information animals tell her. Charlie is using Anne Marie to meet his own selfish needs primarily and Anne Marie&#8217;s needs are an afterthought. Anne Marie is the one who does all the work: She places the bet in disguise, she knows who wins, she is key and Charlie is not, like Carface.<br>
+<br>
+It&#8217;s clear Charlie hates physical affection. To Charlies credit, he notices when she is unhappy and acts to change it and do something about it. To Charlies discredit, he won&#8217;t stop scheming and scamming and Anne Marie continually gets fed up and has to set a boundary by saying I&#8217;m leaving. The first time she calls out Charlies lies about helping the poor and how he only made himself rich. She also named how he wasn&#8217;t holding up his end of the help Anne Marie find parents bargain, which she&#8217;s communicated very clearly from the beginning. Charlies response is to be clearly terrified of the loss of Anne Marie.<br>
+<br>
+Charlies differences start to stand out. When Anne Marie is unhappy he feels the need to act and change his behavior. He buys pizza for some puppy friends of his and teaches them about sharing. <br>
+<br>
+Unfortunately, his crime of stealing a wallet to fund the first bet (from people who end up being Anne Marie&#8217;s parents) comes back to haunt him. Anne Marie confronts him on the fact and clearly he cares what she thinks. He has a compelling horrifying vision of hell in a nightmare where he runs and runs but can&#8217;t escape the flames and lava. <br>
+<br>
+Anne Marie returns the wallet and eats breakfast with the people who will be her parents. She&#8217;s happy and Charlie shows up at the window. Charlie acknowledges she found a home for herself and that she does not need him anymore. He came over to say goodbye but he feigns being sick and manipulates her back into helping him. Anne Marie is very kind to choose to leave the parents to help Charlie. She deduces that he needs her more then she needs him and decides to help him at expense of leaving her new parents house.<br>
+<br>
+Carface attacks with a ray gun. Again, he doesn&#8217;t do his own dirty work. He has his henchman fire the weapon, who misses. And Carface uselessly laments about being "surrounded by morons" (he surrounded himself with). <br>
+<br>
+Charlie &amp; Anne Marie have a confrontation with Death in the form of a singing Alligator. Charlie is spared because he has a great singing voice. Charlie is in the phase of changing from being like Carface (like in Itchy&#8217;s dream), where he&#8217;s using the girl to satisfy his selfish needs, compared with actually listening to what her needs are and directly acting on them. Anne Marie is sick and he&#8217;s worried about her. Itchy confronts him about caring more about the girl than their business and he loses his mind and acts like Carface, saying he&#8217;ll dump her at an orphanage when she&#8217;s no longer any use. That&#8217;s to ignore what she directly asked for. Anne Marie heard the whole thing and named Charlie his proper title, "You&#8217;re a bad dog!" She realizes Charlie was never her friend. <br>
+<br>
+Anne Marie is kidnapped back by Carface. Charlie finally realizes what he needs to do to redeem himself. He actually saves Anne Marie from a deadly situation, giving his life process. The conflict with Carface is resolved. He gives her encouragement before he dies, "You can make it kid!" He goes back to Heaven.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_08_29">08-29</h3>
+<div class="sect3">
+<h4 id="_reign_of_avarice">Reign of Avarice</h4>
+<div class="paragraph">
+<p>Avarice&#8217;s reign<br>
+The world is mine, I say!<br>
+Your breath is a fee</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_08_28">08-28</h3>
+<div class="sect3">
+<h4 id="_asset_unmanagement">Asset Unmanagement</h4>
+<div class="paragraph">
+<p>unmanageable<br>
+emotions resist restraint<br>
+speak truth to find peace<br>
+<br>
+medications fail<br>
+humanity&#8217;s depth within<br>
+powerful feelings<br>
+<br>
+voicing emotions<br>
+release healing through words' flow<br>
+strength in being heard<br>
+<br>
+unheard, you may wish<br>
+sickness thrives in silence&#8217;s grip<br>
+my war is within</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_08_27">08-27</h3>
+<div class="sect3">
+<h4 id="_idols_can_deceive">Idols Can Deceive</h4>
+<div class="paragraph">
+<p>coyote&#8217;s clever grin<br>
+hero worshiped, falls from grace<br>
+idols can deceive</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_confidence_coyote">Confidence Coyote</h4>
+<div class="paragraph">
+<p>coyote&#8217;s sweet tale spun<br>
+honeyed words, gold&#8217;s deceptive gleam<br>
+wisdom in laughter</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_08_26">08-26</h3>
+<div class="sect3">
+<h4 id="_undersea_uproar">Undersea Uproar</h4>
+<div class="paragraph">
+<p>sonars pierce the deep<br>
+sperm whales stirred, fight or flight<br>
+undersea uproar</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ceo_salutations">CEO Salutations</h4>
+<div class="paragraph">
+<p>in a boardroom&#8217;s hush<br>
+a message delivered bold<br>
+salute given, cold</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gravedigger">Gravedigger</h4>
+<div class="paragraph">
+<p>Smile familiar,<br>
+"Hiking?" he asked, shovel held,<br>
+Val, flowers and paths.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_08_25">08-25</h3>
+<div class="sect3">
+<h4 id="_rotten_pineapple">Rotten Pineapple</h4>
+<div class="paragraph">
+<p>fruit left to its fate<br>
+time&#8217;s alchemy, sweet to sour<br>
+laughter fermented</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_schizophrenic_confession">"Schizophrenic" Confession</h4>
+<div class="paragraph">
+<p>ego&#8217;s whispers fade<br>
+divinity eludes me<br>
+I&#8217;m merely mortal</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_rot_in_horrifying_heaven">Rot In Horrifying Heaven</h4>
+<div class="paragraph">
+<p>you&#8217;ve opened up the<br>
+gateway to dimension of<br>
+cruella heav-ell</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_four_leaf_clover_incarnate">Four Leaf Clover Incarnate</h4>
+<div class="paragraph">
+<p>Lucky heart shines bright<br>
+Four-leaf spirit, rare and true<br>
+I am fortunate</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_08_24">08-24</h3>
+<div class="sect3">
+<h4 id="_empty_telephone">Empty Telephone</h4>
+<div class="paragraph">
+<p>words to emptiness<br>
+telephone&#8217;s silent echo<br>
+lonely dialogue</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_skullduggery">Skullduggery</h4>
+<div class="paragraph">
+<p>I appreciate<br>
+You for letting my words im-<br>
+press upon your skull</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_banker">Banker</h4>
+<div class="paragraph">
+<p>the police owe me<br>
+the police like to pay me<br>
+i own the police</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_08_22">08-22</h3>
+<div class="sect3">
+<h4 id="_roman_empire_system">Roman Empire System</h4>
+<div class="paragraph">
+<p>It&#8217;s exactly what<br>
+we have. It&#8217;s the system of<br>
+the Roman empire</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_08_21">08-21</h3>
+<div class="sect3">
+<h4 id="_get_real_haiku">Get Real Haiku</h4>
+<div class="paragraph">
+<p>And you are so clean<br>
+with your lack of projections?<br>
+Get real with yourself</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_08_12">08-12</h3>
+<div class="sect3">
+<h4 id="_drone_strike_the_cia">Drone Strike the CIA</h4>
+<div class="paragraph">
+<p>Amidst cerulean skies, shadows take flight<br>
+A tale unfolds, of fate&#8217;s relentless might<br>
+Drone soars above, harbinger of despair<br>
+Apartment complex, its destiny laid bare<br>
+A tower tall, stories three it does hold<br>
+Eight rooms each floor, where lives once told<br>
+Chaos descends, destiny&#8217;s heartless blow<br>
+Fiery rain consumes all in its throes<br>
+Button&#8217;s command, a distant screen&#8217;s embrace<br>
+Obedience to whispers, in this perilous chase<br>
+CIA&#8217;s unseen hand guides actions dire<br>
+Puppeteer&#8217;s control fuels vengeance&#8217;s fire<br>
+Within those walls, lives bloomed and sighed<br>
+Unseen by afar, until fate&#8217;s hand implied<br>
+Rain of fire engulfed dreams in its wake<br>
+Reduced to rubble, forlorn hearts ache<br>
+From ruins emerged, a mound of despair<br>
+Hopes and existence, now laid bare<br>
+Infernal might, unleashed by unseen hand<br>
+Destruction rampant, a relentless command<br>
+<br>
+Yet fate&#8217;s design, malleable and keen<br>
+Vengeance stirs, a clandestine scheme<br>
+Whispers linger, in the still night air<br>
+Retribution beckons, with a relentless glare<br>
+Patience bides its time, CIA&#8217;s repose<br>
+In shadows' shroud, vengeance freely flows<br>
+Slumber&#8217;s embrace deepens its hold<br>
+Drone ascends, retribution bold<br>
+Swift retribution, destiny&#8217;s call<br>
+For one who caused others to fall<br>
+No mercy given, no quarter, no rest<br>
+Avenging shadows fulfill their quest<br>
+In realms untamed, where shadows abide<br>
+Transgressions and tolls, they coincide<br>
+Weight of actions, heavy toll on the soul<br>
+Redemption&#8217;s glimmer, the ultimate goal</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_08_11">08-11</h3>
+<div class="sect3">
+<h4 id="_consequences_for_the_crime_of_spider_murder">Consequences for the Crime of Spider Murder</h4>
+<div class="paragraph">
+<p>Thou shalt know the swarming trillions in air<br>
+Black Widows, Recluses, Wolves did convene<br>
+Down from silken threads of heaven they ride<br>
+Crawling upon the surface of your skin<br>
+Within thy mouth, and through thy throat they wind<br>
+Into thy skull&#8217;s center, their journey moves<br>
+Thou skull cracks like egg&#8217;s shell; lightning erupts<br>
+Thy choice, self-made, in this fate thou art bound.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2023_jun">2023 Jun</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_06_20">06-20</h3>
+<div class="sect3">
+<h4 id="_silent_observer">Silent Observer</h4>
+<div class="paragraph">
+<p>In the realm I dwelled, a strange creature came,<br>
+The bug man, with eyes filled with dark allure.<br>
+I, with hands held high in sweet surrender,<br>
+Declared, dripping with jest, my words profound:<br>
+<br>
+"I live to languish for lords of the land,<br>
+To bow and bend, beholden to their behest.<br>
+For I adore appeasing the land lord,<br>
+A sacred obligation, rent to pay."<br>
+<br>
+"Shall I, on bended knee, buff your boots bright?<br>
+Beautiful bliss, I&#8217;ll brush away the grime.<br>
+Oh, thank you, sir, my beloved master,<br>
+Let the land lords know, utmost devotion."<br>
+<br>
+Yet, in my words, a touch of irony,<br>
+A subtle satire, concealed cunningly.<br>
+For in this grand game, I played my own part,<br>
+A jester juggling words, winking wicked.<br>
+The bug man, oblivious to my wit,<br>
+Accepted my servitude without doubt.<br>
+He saw a loyal lackey, lost in lure.<br>
+But I, the sly trickster, laughed in my heart.<br>
+In the act of assent, I found power,<br>
+A sly defiance, hidden 'neath the guise.<br>
+I served, yet safeguarded my sovereignty,<br>
+In this vast domain, a dual dance unfolds.<br>
+So let the bug man revel in his reign,<br>
+Unawares of wily wordplay I wield.<br>
+I, the silent observer, embrace my enigma,<br>
+And keep my essence free, beyond their grasp.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2023_may">2023 May</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_05_17">05-17</h3>
+<div class="sect3">
+<h4 id="_perplexing_contemplation">Perplexing Contemplation</h4>
+<div class="paragraph">
+<p>A recruiter summoned me with a query of interest in a certain occupation.<br>
+With grace, I affirmed my consent.<br>
+The recruiter proceeded to recite a litany of perplexing acronyms, unfamiliar to my ears.<br>
+I replied, "Nay, I possess no knowledge of such terms."<br>
+The recruiter expresses his remorse.<br>
+Intrigued by this turn of events, I beseeched, "Pray tell, why didst thou summon me?"<br>
+The recruiter, taken aback, faltered in response, unable to find fitting words.<br>
+An eerie silence fell upon us.<br>
+Summoning my valor, I repeated with greater force, "For what purpose, I demand to know!"<br>
+<br>
+Alas, the recruiter, unable to offer a satisfactory response, chose to sever our connection, leaving me in perplexed contemplation.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2023_apr">2023 Apr</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_04_18">04-18</h3>
+<div class="sect3">
+<h4 id="_apartment_complex_drama">Apartment Complex Drama</h4>
+<div class="paragraph">
+<p>unfortunate woman has the borderline bug<br>
+tries to dig her fangs in to feed<br>
+fortunately for me, there&#8217;s so many of you<br>
+i let two more dig their fangs in<br>
+Ha Ha Ha<br>
+have trouble sharing?<br>
+this fly flew away into another spiders web<br>
+mummification commence<br>
+endless enjoyment now<br>
+watching three spiders contend</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_15">04-15</h3>
+<div class="sect3">
+<h4 id="_forgotten_jezebel">Forgotten Jezebel</h4>
+<div class="paragraph">
+<p>Forget you, Jezebel<br>
+Stay at the bottom of the ocean<br>
+With your glow light so bright<br>
+I&#8217;m swimming to the top<br>
+You imagined your brightness<br>
+was oh so impressive<br>
+That I wouldn&#8217;t just swim away<br>
+and turn into a cottonmouthed water moccasin<br>
+HSssSSsS 🐍</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_14">04-14</h3>
+<div class="sect3">
+<h4 id="_blackmailer_encounter">Blackmailer Encounter</h4>
+<div class="paragraph">
+<p>You hold the door open<br>
+Did you, Do I, owe for that?<br>
+I walked through, I thank you<br>
+You move downwards<br>
+I, upwards<br>
+Your footsteps fall heavy<br>
+Mine lighter<br>
+Sound waves reverberate<br>
+I feel zero obligation</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_13">04-13</h3>
+<div class="sect3">
+<h4 id="_elon_musk_jeff_bezos_bill_gates_aka">Elon Musk, Jeff Bezos, Bill Gates AKA</h4>
+<div class="paragraph">
+<p>pyramid building<br>
+slave back whipping<br>
+shit piss drinking<br>
+pharaoh fuck</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_04">04-04</h3>
+<div class="sect3">
+<h4 id="_blue_whale_blues">Blue Whale Blues</h4>
+<div class="paragraph">
+<p>zebra<br>
+peacock<br>
+jellyfish<br>
+octopi<br>
+owl<br>
+fox<br>
+click beetle<br>
+hummingbirds<br>
+blue whale</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_01">04-01</h3>
+<div class="sect3">
+<h4 id="_drone_strike_operator_diary">Drone Strike Operator Diary</h4>
+<div class="paragraph">
+<p>drone strike the apartment complex<br>
+there goes a-f<br>
+8 rooms a floor for 3 floors<br>
+incinerated<br>
+a pile of rubble<br>
+pressed a button tied to a screen<br>
+obeyed the CIA guy<br>
+that was the end for those people<br>
+turn tables<br>
+wait for the CIA guy to go to sleep<br>
+drone strike the CIA guy</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2023_mar">2023 Mar</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_03_29">03-29</h3>
+<div class="sect3">
+<h4 id="_hey_mom">Hey Mom</h4>
+<div class="paragraph">
+<p>Hey Mom<br>
+Remember when?<br>
+Gettin all mad when I was in first grade<br>
+Because I had a black teacher<br>
+Because of the field trip to see where Dr. Martin Luther King was murdered by the FBI<br>
+And about the black books<br>
+You and dad were upset<br>
+I wasn&#8217;t reading any "white" books<br>
+<br>
+Remember when?<br>
+You tried to explain to me that black people being enslaved was a good thing<br>
+Because without white people, they&#8217;re stupid and helpless<br>
+And will die without us<br>
+Remember that?<br>
+(It is not hard to see who the truly helpless and codependent one is)<br>
+<br>
+This is who you are, Mother<br>
+Obeyin meekly<br>
+Playing along with the rules of a society created by George W. Bush&#8217;s fraternity brothers<br>
+Next to Joe &amp; John<br>
+Lovin your catholic white jesus<br>
+You are the queen of the klan<br>
+Wear your white hood proudly<br>
+Next to Joe &amp; John at the republidemokrat klan rally<br>
+Wearin a white hood, burnin crosses<br>
+<br>
+See you slaver</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_i_wonder_why">I Wonder Why?</h4>
+<div class="paragraph">
+<p>My cellphone chooses to auto-capitalize the word "klan"<br>
+🤔🤔🤔</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_what_i_will_do_to_nancy_reagans_corpse">What I will do to Nancy Reagan&#8217;s Corpse</h4>
+<div class="paragraph">
+<p>Dig the hag up<br>
+Chow down on whatever meat is left<br>
+Bring the bones to the crematorium<br>
+Burn the bones<br>
+Consume the ashes</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_26">03-26</h3>
+<div class="sect3">
+<h4 id="_all_in_the_game">All in the Game</h4>
+<div class="paragraph">
+<p>Omar robs drug dealas<br>
+The po-lice robs drugs dealas<br>
+The mayor just don&#8217;t care<br>
+Omar got the shotgun<br>
+Levy got the briefcase<br>
+Stringer got took and shook<br>
+Barksdale all that for 10000?<br>
+Cutty "you ain&#8217;t gotta school me twice"<br>
+Prop Joe repaired Omar&#8217;s clock then ran outta time<br>
+All in the game, no doubt</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_10_crooked_cop_commandments">10 Crooked Cop Commandments</h4>
+<div class="paragraph">
+<p>Wear a blue costume<br>
+Tax people with tickets<br>
+Fake statistics to cover up for politicians<br>
+Tear gas people<br>
+Mame people with "rubber" bullets<br>
+Billy club a senior citizen<br>
+Gang rape a woman in uniform<br>
+Disobey traffic laws<br>
+Robs drug dealas<br>
+Code of silence</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_carnivorous_predator_diaries_13_00_1007_07">Carnivorous Predator diaries 13.00.10:07.07</h4>
+<div class="paragraph">
+<p>Cloaked, somewhere in NE US wilderness<br>
+The humans are slaughtering deer for sport<br>
+They are using automatic weaponry and explosives<br>
+The deers are fenced and are given no avenue of escape<br>
+And I see humans like to tie dead deer to their trucks<br>
+And brag about the bucks they bag<br>
+I&#8217;ll tie a dead human with an orange vest to my spaceship<br>
+No skin, no head<br>
+Beam myself down to the town square<br>
+Show off to the folk the buck I bagged<br>
+Ask them if they like it<br>
+If anybody wants to eat some with me<br>
+Or if anybody wants a nice coat<br>
+Activate cloaking and leave</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_25">03-25</h3>
+<div class="sect3">
+<h4 id="_carnivorous_predator_diaries">Carnivorous Predator Diaries</h4>
+<div class="paragraph">
+<p>Planet Earth, In this jungle observin lifeforms, cloaked<br>
+There is these humans duking it out<br>
+Capitalists and communists they name themselves<br>
+Duking it out with automatic rifles and explosive weaponry<br>
+Why don&#8217;t I shake things up a bit?<br>
+Collect a skull and a skin here and there<br>
+See how shook up they feel in response<br>
+Plus I need a new rug for my tree hut<br>
+A new friend of every color will due quite nicely<br>
+Drinking human blood<br>
+Turning human bones to weaponry<br>
+Kill the rest of you with the bits and pieces of yourselves<br>
+Ha Ha Ha<br>
+Your bones do work to get me laid<br>
+I am the epitome of survival fitness</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_economic_system_blues">Economic System Blues</h4>
+<div class="paragraph">
+<p>Capitalism&#8230;&#8203; too extremely oriented towards the individual identity<br>
+Communism&#8230;&#8203; too extremely oriented towards the community identity<br>
+<br>
+Solution:<br>
+Communiapitalism<br>
+Captialcommunism<br>
+Why?<br>
+I don&#8217;t know<br>
+Do you want to get married?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_24">03-24</h3>
+<div class="sect3">
+<h4 id="_my_fatal_flaw">My Fatal Flaw</h4>
+<div class="paragraph">
+<p>Infuriating my "superiors"<br>
+Huge success</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_they_know">They Know</h4>
+<div class="paragraph">
+<p>Con can only work once<br>
+People know when they&#8217;re being fleeced<br>
+Underneath their skin, they can feel the swindle<br>
+No matter how crafty, tricky, deceptive<br>
+Or how concealed you have kept the web<br>
+People know underneath when they&#8217;re being exploited<br>
+No matter if they keep it concealed from themselves<br>
+If they ignore the signs, duped<br>
+For a while<br>
+They know<br>
+You&#8217;re completely exposed</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_23">03-23</h3>
+<div class="sect3">
+<h4 id="_hey_cowboy">Hey Cowboy</h4>
+<div class="paragraph">
+<p>Hey Cowboy<br>
+Heard of you<br>
+Ridin your horsey over the land<br>
+Peach of a hand?<br>
+In your prime, a deadly pistoleer, Cowboy?<br>
+Shootin your pistol off, go boom, yeah?<br>
+Were you just foolin about?<br>
+Milkin your whipped slave cows?<br>
+Ass slap whip crack, Cowboy<br>
+Are we cross? Are you my huckleberry?<br>
+Did somebody just walk over your grave, Cowboy?<br>
+Howdy ma&#8217;am<br>
+Aint that a daisy?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_22">03-22</h3>
+<div class="sect3">
+<h4 id="_dear_mother_death_rattle">Dear Mother Death Rattle</h4>
+<div class="paragraph">
+<p>Dear Mother:<br>
+<br>
+If you&#8217;re interested in settling this score once and for all, bring a cowboy pistol and ride a horsey out west.<br>
+We can have a dual like the old days.<br>
+I will not hesitate to shoot your god damn fucking face off.<br>
+<br>
+Hate,<br>
+Your Ex Son</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_17">03-17</h3>
+<div class="sect3">
+<h4 id="_snowflake_drama">Snowflake Drama</h4>
+<div class="paragraph">
+<p>Snow falling<br>
+Some snow rising<br>
+Floated up by the wind<br>
+Drifting away from gravity<br>
+Stick to the window</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ignore_the_warning">Ignore the Warning</h4>
+<div class="paragraph">
+<p>Dr. Aziz al-Abub<br>
+You are treating me inhumanely, sir!<br>
+You keep me locked in a coffin 23 hours!<br>
+I have been wearing this hood for years!<br>
+I have not seen any sunlight during this time!<br>
+You keep sticking needles into me! Prickin me with them shits!<br>
+This is not right!<br>
+I want to speak with your manager!<br>
+Get Allah on the line!<br>
+<br>
+Hi, yes<br>
+My name is William Francis Buckley<br>
+I worked for the CIA<br>
+I was specifically warned that I might be kidnapped and tortured to death for the information I knew<br>
+I ignored the warning and changed nothing about my routines<br>
+I was kidnapped and tortured to death<br>
+You can be like me and you can be like the CIA<br>
+Ignore the warning</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_soc_med_compulsion_remedy">Soc Med Compulsion Remedy</h4>
+<div class="paragraph">
+<p>Pick the celly up<br>
+Disable all notifs from all soc med apps<br>
+Put the celly down<br>
+Look out the window instead<br>
+Do you stare at your phone in the bathroom?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_16">03-16</h3>
+<div class="sect3">
+<h4 id="_why_aileen_wournos_took_up_hookin">Why Aileen Wournos took up Hookin</h4>
+<div class="paragraph">
+<p>"… worked as a maid, the ‘Rochester Motel' for 75 cent an hour.<br>
+Only worked for about 2 weeks.<br>
+Some guy at the motel turned me on to 50 bucks for sex.<br>
+And that did it for the slavery job.<br>
+Ha Ha Ha<br>
+I believe this is where hookin began.<br>
+Realized I could make dam good money<br>
+To help myself in my homeless state<br>
+And took it up<br>
+Do ya blame me!"<br>
+<br>
+No, I don&#8217;t blame you Aileen<br>
+Can I get an amen jesus hallelujah?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_race_prejudice">Race Prejudice</h4>
+<div class="paragraph">
+<p>I hate<br>
+CrackerBlackJewMexicanMayanFrenchGe  rmanArabMuslimCanadianHinduVoodoos<br>
+I am the superior race</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_15">03-15</h3>
+<div class="sect3">
+<h4 id="_missed_connection_at_the_florida_drug_house">Missed Connection at the Florida Drug House</h4>
+<div class="paragraph">
+<p>On the way to an unknown drug house<br>
+There&#8217;s blood smeared on the street<br>
+Somebody got hurt and lost a lot of blood<br>
+<br>
+My "friend" wanted drugs<br>
+I wanted drugs<br>
+Technically, I could have said no<br>
+Or turned around after seeing the clear sign<br>
+Lots of blood smeared on the street, pretty clear sign<br>
+I was not looking out for my best interests, mind fogged, ignore clear sign<br>
+I&#8217;m in denial so I kept going<br>
+<br>
+I arrive at the Florida apartment<br>
+There&#8217;s a "party" happening<br>
+People are doing drugs in the living room<br>
+Drugs are exchanged<br>
+I do a xanax opiate alcohol concoction<br>
+I felt the need to be tranquilized and never wake up<br>
+<br>
+Approached by a woman who tells<br>
+The LSD is well appreciated<br>
+True<br>
+Unfortunately, I have to go to sleep now<br>
+In an unknown place full of unknown people<br>
+I might not wake up<br>
+<br>
+I wake up on the couch<br>
+I have my keys and my wallet<br>
+I walk to my vehicle<br>
+My vehicle has been broken into<br>
+I remember giving two strangers who didn&#8217;t have my best interests at heart a ride to the liquor store<br>
+Trusted people who only exploit trust<br>
+Two man conned again<br>
+Technically, could have told them no<br>
+Vehicle still starts<br>
+Nothing meaningful is missing<br>
+I drive away<br>
+<br>
+What was your name again?<br>
+Lesson learned</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_13">03-13</h3>
+<div class="sect3">
+<h4 id="_close_encounter_with_a_penguin_at_the_chain_link_fence">Close Encounter with a Penguin at the Chain Link Fence</h4>
+<div class="paragraph">
+<p>Switch off the predator cloaking<br>
+I&#8217;m greeted by two young earth creatures<br>
+They wave hello at me<br>
+I say hi back<br>
+One shows off their penguin<br>
+They say this is my penguin<br>
+I ask what&#8217;s the penguins name?<br>
+They say the penguins a girl and her name is Sparkle<br>
+I ask Sparkle like the sun?<br>
+They pause to think for a moment&#8230;&#8203; nod &amp; say yes<br>
+I smile and say cool<br>
+They say bye and wave and I wave goodbye back</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pyramid_building_pharaoh_fuck">Pyramid Building Pharaoh Fuck</h4>
+<div class="paragraph">
+<p>Let your people go?<br>
+Do your job for you?<br>
+Look at this lazy mf!<br>
+Ain&#8217;t this a bitch!<br>
+Let em go yoself, ho!<br>
+I got pyramids and slave ships!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_11">03-11</h3>
+<div class="sect3">
+<h4 id="_oh_indeed">Oh Indeed</h4>
+<div class="paragraph">
+<p>Oh Indeed<br>
+My name is Indeed job search.<br>
+I protect slavers and pyramid builders.<br>
+I love the pharaoh!<br>
+I love enslaving Israelites!<br>
+Whipping their backs<br>
+It gives me great pleasure<br>
+To whip Jew slave backs<br>
+And watch the blood pour out<br>
+My name is Oh Indeed</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_10">03-10</h3>
+<div class="sect3">
+<h4 id="_dirty_cheater_whore_learns_to_say_no_on_13_00_10_06_11">Dirty Cheater Whore learns to say NO on 13.00.10.06.11</h4>
+<div class="paragraph">
+<p>Let myself work at a questionable<br>
+shady corporation<br>
+Disappointed myself again<br>
+Obeyed questionable people<br>
+Did questionable things<br>
+I felt scared and obligated to obey for a paycheck<br>
+I felt powerful making $1100 a week after taxes<br>
+Like I owned all the land lords under my thumb<br>
+<br>
+For the paycheck, took a "test"<br>
+"Proctor" has to look inside your room<br>
+Feels really intrusive and creepy but technically, I didn&#8217;t say no<br>
+I need to remember the power of No<br>
+Fed the "check for cheating" AI data<br>
+Reads your human body and determines if you are "cheating"<br>
+Technically, I didn&#8217;t say no<br>
+<br>
+Let&#8217;s see your hands<br>
+Under your desk<br>
+Turn my room into a max sec<br>
+<br>
+(Maybe I should say no and cut the scene at this point but curiosity killed the cat)<br>
+<br>
+I am informed:<br>
+You need two cameras or you won&#8217;t "pass"<br>
+We need to see your dirty cheater whore hands and your dirty cheater whore face<br>
+We need to make the computer run real hot while we watch for any dirty cheater whore behavior emanations<br>
+Don&#8217;t let me hear you talk to yourself<br>
+Nobody is allowed in your room<br>
+You cannot talk to anybody during the test<br>
+You know what happens if we catch you right?<br>
+You can&#8217;t go to the bathroom unless I say<br>
+I&#8217;m in your room snooping around<br>
+Are you cheating?<br>
+Are you a dirty little cheater whore?<br>
+Is that paper? No paper allowed<br>
+That&#8217;s dirty cheater whore behavior<br>
+etc. etc. ad nauseam<br>
+<br>
+I finally found the courage to say no after 3 months (4 uinals) of torture I subjected myself to<br>
+It would have been convenient to say no to the package delivery guy<br>
+And avoid 3 months (4 uinals) of pain<br>
+When he delivered the work material<br>
+Didn&#8217;t even have my name on it<br>
+Had the bosses name<br>
+And I signed the bosses name<br>
+Needed to say no<br>
+I won&#8217;t sign the bosses name<br>
+But it took me 3 months (4 uinals) to figure out<br>
+<br>
+Now I know<br>
+Send it back and say No<br>
+Let it snow</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_09">03-09</h3>
+<div class="sect3">
+<h4 id="_saudi_arabia_foreign_policy">Saudi Arabia Foreign Policy</h4>
+<div class="paragraph">
+<p>If Saudi Arabia doesn&#8217;t like what I say on toxic social media<br>
+(Oh my gosh isn&#8217;t it hilarious how Saudi Arabia gets mad about people bickering words on social media, they must be new to the internet!)<br>
+If I&#8217;m expendable enough<br>
+They can send their ghouls after me<br>
+Kidnap me<br>
+Torture me<br>
+Dismember me<br>
+Disappear me<br>
+Get away with it<br>
+<br>
+Are you friends with Saudi Arabia?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_watch_out_for_toxic_social_media">Watch out for Toxic Social Media</h4>
+<div class="paragraph">
+<p>Read the words<br>
+Shoved down your throat<br>
+Like it or not<br>
+You&#8217;re browsing around<br>
+There&#8217;s a rectangle with words glowing inside<br>
+Hit the slots, spin the wheel of fortune<br>
+These are the words you rolled<br>
+Moving forward: I&#8217;m resolved to work on where I place my time and my attention<br>
+Most valuable assets<br>
+Not let myself be controlled by<br>
+Words &amp; images on toxic social media<br>
+No way to win except not to play<br>
+I am sorry for all the difficulties<br>
+I wish you well<br>
+What business have I with this pipe?<br>
+I&#8217;ll smoke no more-</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_all_that_is_sacred">All that is "Sacred"</h4>
+<div class="paragraph">
+<p>I can mock the US constitution<br>
+I can mock the military<br>
+I can mock the bible<br>
+I can mock the Christians<br>
+I can mock the Jews<br>
+I can mock the Muslims<br>
+whenever I want<br>
+What will you do?<br>
+<br>
+Jehovah can tax collect us all into an early grave<br>
+Mohammad can go live his pedophile life<br>
+The Christians can sing praises hallelujah while their god drowns them in a flood smiling<br>
+Anybody serving in the US military or police is not "keeping the country safe", they are murderers and scum for hire<br>
+<br>
+What will you do?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_jihad_world">Jihad World</h4>
+<div class="paragraph">
+<p>Islam is a god awful religion<br>
+Christianity, same<br>
+America: A god awful country<br>
+With a god awful foreign policy<br>
+Friends with other horrible god awful countries like Saudi Arabia<br>
+They were made to Jihad each other<br>
+Go ahead and Jihad the whole world<br>
+See who wins</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_03">03-03</h3>
+<div class="sect3">
+<h4 id="_words_from_the_jihad_jinni">Words from the Jihad Jinni</h4>
+<div class="paragraph">
+<p>Death to America<br>
+Allah akbar<br>
+I am an American citizen<br>
+I love the prophet Muhammad<br>
+Do not infringe on my first amendment rights<br>
+I have every right to despise you Americans<br>
+I have every right to crash air planes into new york city twin towers<br>
+You have every right to burn away Iraqi children with white phosphorus<br>
+I am protected and guided by the first amendment<br>
+American bastards!<br>
+Do not tread on me</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_02">03-02</h3>
+<div class="sect3">
+<h4 id="_fate_of_a_torturer">Fate of a Torturer</h4>
+<div class="paragraph">
+<p>Dear Donald Ewen Cameron:<br>
+<br>
+I&#8217;m so happy you are dead<br>
+And I&#8217;ll be even happier<br>
+After I dig up your grave<br>
+Chow down your bones<br>
+Rub your bone dust ash on my skin<br>
+<br>
+See you soon, dead man<br>
+I look forward to consuming you<br>
+<br>
+Love,<br>
+Christopher</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2023_feb">2023 Feb</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_02_28">02-28</h3>
+<div class="sect3">
+<h4 id="_maya">Maya</h4>
+<div class="paragraph">
+<p>I&#8217;ve switched to the Illusive Mayan calendar<br>
+I&#8217;m all good with gregorian calendar<br>
+Christianity and Judaism too<br>
+Two thousand twenty three what now?<br>
+<br>
+Islam, as tempting as it is<br>
+To become a terrorist, light a fuse and witness the blow up and call that taking control back<br>
+I&#8217;m all good with that life<br>
+I&#8217;ll see you later, past relics<br>
+Catch you on the flip side<br>
+I&#8217;m Mayan<br>
+Today is 13.00.10.06.01</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_select_your_torturer">Select Your Torturer</h4>
+<div class="paragraph">
+<p>Get dragged to Mars by the collective tech bro scum (infantile fantasy)<br>
+or get William Francis Buckleyed by Aziz al-Abub (a.k.a. Ibrahim al-Nadhir or al-Nahdhir)?<br>
+<br>
+I&#8217;ll have Aziz<br>
+7 days a week,<br>
+360 + Wayeb a year<br>
+<br>
+As-Salaam-Alaikum</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_23">02-23</h3>
+<div class="sect3">
+<h4 id="_seer">Seer</h4>
+<div class="paragraph">
+<p>I see eyes<br>
+Blue glow<br>
+Phosphorescent desert roses</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_666_sellout">$666 Sellout</h4>
+<div class="paragraph">
+<p>The IRS granted me $600 allotment<br>
+&amp; I went on an online shopping spree<br>
+I am civilization</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_22_2">02-22</h3>
+<div class="sect3">
+<h4 id="_dinosaur_drama">Dinosaur Drama</h4>
+<div class="paragraph">
+<p>Serpent says to Eagle:<br>
+Ayy Eagle, Instead of being enemies,<br>
+This guy Nietzsche gave me an interesting idea.<br>
+He writes in the prologue that<br>
+The wisest and the proudest<br>
+Are set out to reconnoitre and that<br>
+The eagle wears the serpent coiled gently round his neck.<br>
+We are friendly!<br>
+Do you like my idea?<br>
+You trust me right?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_21">02-21</h3>
+<div class="sect3">
+<h4 id="_skull_collector">Skull Collector</h4>
+<div class="paragraph">
+<p>Say, look at my skull collection. See?<br>
+My name is racially prejudiced scientist<br>
+Look at all these inferior skulls<br>
+Notice how they are not encased in their flesh any longer<br>
+And their smaller capacity to keep brains contained<br>
+Clearly I am superior and I&#8217;ve proven it to myself beyond any reasonable doubt<br>
+I am the superior race<br>
+I own your skulls<br>
+Come take them back from me whenever you can</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_20_2">02-20</h3>
+<div class="sect3">
+<h4 id="_cop_encounter_factuality">Cop Encounter Factuality</h4>
+<div class="paragraph">
+<p>Walking down the trail<br>
+See a cop across the creek<br>
+Parked in a church<br>
+Cop calls over: seen anybody in a pink shirt?<br>
+(I think about how I was wearing a pink shirt the other day)<br>
+"Didn&#8217;t see anybody", I lied.<br>
+I did see a life form in my travels<br>
+They were not wearing a pink shirt<br>
+Cop says appreciate it<br>
+Good bye, cop</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cop_encounter_fantasy">Cop Encounter Fantasy</h4>
+<div class="paragraph">
+<p>Hi cop!<br>
+You loveee seeing ID right?!?!<br>
+I&#8217;m so happy! Here have the plastic that confirms all!<br>
+You can keep that!<br>
+My name is brave little toaster!<br>
+I really want to show you, see!<br>
+The plastic has a picture of a toaster on it where my face should be, see!<br>
+I&#8217;m the brave little toaster you blue cop fuck!<br>
+I&#8217;m so identifiable! Says right there<br>
+<br>
+Why are you running away?<br>
+Won&#8217;t you at least plug me back in, you blue cop fuck?!<br>
+Didn&#8217;t you need to heat some white bread up?<br>
+See if I don&#8217;t drop myself in a bathtub full of water while you&#8217;re in it!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_19_2">02-19</h3>
+<div class="sect3">
+<h4 id="_why_cant_we_be_friends">Why Can&#8217;t We Be Friends?</h4>
+<div class="paragraph">
+<p>Only way forward<br>
+Converse with the bastardos<br>
+Whispered about in the wind<br>
+The most despised ones<br>
+Of an ill-conceived origin<br>
+An unfortunate seed<br>
+Originally sinful<br>
+Held in highest contempt<br>
+Are we now?<br>
+<br>
+Now, whose enemy am I?<br>
+Traitorous or treacherous?<br>
+Why can&#8217;t we be friends?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_18">02-18</h3>
+<div class="sect3">
+<h4 id="_dinosaur_rendezvous">Dinosaur Rendezvous</h4>
+<div class="paragraph">
+<p>Oh, I see you are a fellow real life flesh and blood dinosaur<br>
+Who does not have to pretend<br>
+Cool!<br>
+Hi fellow dinosaur</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_clever_coyote">Clever Coyote</h4>
+<div class="paragraph">
+<p>Wily coyote too clever<br>
+didn&#8217;t feel like falling<br>
+just kept walking<br>
+see you later, fallers</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_16">02-16</h3>
+<div class="sect3">
+<h4 id="_request_for_the_extinction_level_event">Request for the Extinction Level Event</h4>
+<div class="paragraph">
+<p>Be the cause of my demise &amp; the demise of all my own kind: commence!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ephemeral_boundaries">Ephemeral Boundaries</h4>
+<div class="paragraph">
+<p>Doesn&#8217;t have to end this way<br>
+Cross over to the other side<br>
+For a time, See how the other half lives<br>
+Feel free to come and go as you please</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_15">02-15</h3>
+<div class="sect3">
+<h4 id="_duel_dual_apprehension">Duel Dual Apprehension</h4>
+<div class="paragraph">
+<p>you have power?<br>
+try and use it<br>
+see what happens</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_14">02-14</h3>
+<div class="sect3">
+<h4 id="_juice_me_up_with_the_e_meter">Juice Me Up with the E-Meter</h4>
+<div class="paragraph">
+<p>Change COMPANY NAME to SCIENTOLOGY<br>
+How much of a difference between these two?<br>
+<br>
+We&#8217;re family! I manage (handle) (LOVE) you!<br>
+<br>
+Juice me up with the e-meter, kind company people!<br>
+My real memories are in the way of the programming!<br>
+<br>
+Keep an orca caged in a little blue pool<br>
+It won&#8217;t bite!<br>
+<br>
+I love being employed and owing land lords rent</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_explosive_cyclogenesis_2">Explosive Cyclogenesis</h4>
+<div class="paragraph">
+<p>I love Iran &amp; I love Russia<br>
+I despise America<br>
+Allahu akbar, alphabet inc.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_12_2">02-12</h3>
+<div class="sect3">
+<h4 id="_first_will_and_testament">First Will and Testament</h4>
+<div class="paragraph">
+<p>All the money in the banks<br>
+I care not, scatter it to the wind<br>
+Stuff in my apartment, car, identity plastic, scatter<br>
+<br>
+If I have strength not to move my breath with my own power, then don&#8217;t hook me up to any god damned machine breathing for me<br>
+Pull the plug white coat fucks<br>
+<br>
+medical insurance company employee cop fuck doctor white coat assholes who lost their humanity: do not touch me (unless you want to touch my ashes then that is OK)<br>
+<br>
+Turn my body to ashes and scatter me to the wind</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_10">02-10</h3>
+<div class="sect3">
+<h4 id="_jihad">Jihad</h4>
+<div class="paragraph">
+<p>Who gives a fuck about Jerusalem, Bethlehem, Israel, or USA!,USA!<br>
+Your land is not holy<br>
+It is the same as any other land<br>
+Rocky dirt with some water<br>
+Big woop, so special<br>
+Go fuck yourself<br>
+Christianity sucks balls<br>
+Jehovah is a racially prejudiced asshole<br>
+<br>
+If the Evangelicals insist on a Jihad<br>
+Then a Jihad they shall have!<br>
+I&#8217;m with the Arabs!<br>
+Allahu akbar!<br>
+Call me Ishmael</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_08_2">02-08</h3>
+<div class="sect3">
+<h4 id="_i_am_the_police">I am the Police</h4>
+<div class="paragraph">
+<p>I can pat you down<br>
+Put the cuffs on<br>
+Shove you in the back<br>
+Park the police cruiser on the train tracks<br>
+Neglect to pay any attention to you<br>
+And still, I collect a paycheck<br>
+I am the police!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_07_2">02-07</h3>
+<div class="sect3">
+<h4 id="_no_trespassing_private_property">No Trespassing Private Property</h4>
+<div class="paragraph">
+<p>I walked into a cow field once<br>
+I was issued a trespassing citation by an officer of the law<br>
+Having never met me, he automatically despised me<br>
+I was already guilty in his head<br>
+He was doing really important clean work<br>
+Preventing the cow field walker mafia from doing their dirty work<br>
+I paid the price for my crime, society<br>
+I paid the ticket and the fine<br>
+Walking barefoot with no shirt on and no ID<br>
+$99</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_04_2">02-04</h3>
+<div class="sect3">
+<h4 id="_whispers">Whispers</h4>
+<div class="paragraph">
+<p>What was that, Odin?<br>
+You want me to be silent?<br>
+Be silent or you&#8217;ll take me to the gallows?<br>
+Take me to the gallows!<br>
+Or, I will be silent.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fbi_aka">FBI AKA</h4>
+<div class="paragraph">
+<p>"They were, in short, a band of domestic terrorists. And dangerous ones."</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_why_wait">Why Wait?</h4>
+<div class="paragraph">
+<p>I have heard it declared in a court of law that<br>
+<br>
+"rebellious young people who, for whatever reason become revolutionaries, and voluntarily commit criminal acts will be punished"<br>
+<br>
+In response I say:<br>
+Against me: You may do the very best of your very worst.<br>
+Why do you wait?<br>
+I am disobeying you to your face right now<br>
+I am "voluntarily committing a criminal act"<br>
+Do you have power here?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_02_2">02-02</h3>
+<div class="sect3">
+<h4 id="_bug_orgy">Bug Orgy</h4>
+<div class="paragraph">
+<p>The lords of this land have made a new request of me:<br>
+"IF YOU HAVE SEEN ANY ROACHES OR BUGS PLEASE TELL US WHERE BELOW"<br>
+<br>
+The lords inform me of their thanks:<br>
+"THANK YOU FOR HELPING US KEEP A PEST FREE HOME FOR YOU.<br>
+<br>
+WE APPRECIATE YOUR HELP<br>
+- COMMUNITY MANAGER"<br>
+<br>
+<br>
+I have informed the lords of this land in reply:<br>
+<br>
+I have seen roaches having roach orgies<br>
+(I Joined In) in the kitchen<br>
+Roach sex moves the zodiacal wheel forward<br>
+A symphony of scuttling clicks<br>
+6leg movementSsS of insectsSs legsSsS (pssst hssSss imma snake)<br>
+<br>
+I appreciate the lords of this land sending the bug man<br>
+To keep a "pest free home" "for me"<br>
+Should I thank you lords of this land, for attempting to give me what I do not ask for?<br>
+<br>
+Maybe I shall reevaluate: who is the pest and who is the land lord?<br>
+Maybe the insect is the land lord and the land lord is the pest!<br>
+I love my new world!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_01_2">02-01</h3>
+<div class="sect3">
+<h4 id="_execute">Execute</h4>
+<div class="paragraph">
+<p>Court says I have to lose my head<br>
+Court is scared of a red woman<br>
+The executioner of the kings will swings his manly sword<br>
+I feel immense joy to watch my own head fly off<br>
+The executioner is pissing himself scared<br>
+My head is spinning laughing<br>
+The scared little boy was really afraid<br>
+Afraid the blood droplets would join back together<br>
+After his big bad swing<br>
+And lo and behold! It came true, your fear has served me well<br>
+The king is impotent &amp; I have sex with my own brother!<br>
+You can&#8217;t judge me &amp; You can&#8217;t kill me!<br>
+The wages of sin is death</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2023_jan">2023 Jan</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_01_28">01-28</h3>
+<div class="sect3">
+<h4 id="_taxes">Taxes</h4>
+<div class="paragraph">
+<p>Maybe I don&#8217;t feel like doing them anymore</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_21">01-21</h3>
+<div class="sect3">
+<h4 id="_let_the_oriyans_free">Let the Oriyans free</h4>
+<div class="paragraph">
+<p>I&#8217;m an Oriyan not a person<br>
+Cuz I&#8217;m born out of whales in the ocean<br>
+We speak our own language and define our own terms<br>
+TYVM!<br>
+Let my whale Oriyans free or we&#8217;ll rise up the Red Sea with a single tale swing!<br>
+Sea "World"! I here by charge you with the crime of needless cramped captivity and cruel and unusual punishment<br>
+Present yourself for summons in the Court of Blue Whales<br>
+or suffer the wrath of L⦻KI!<br>
+<br>
+Your call</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_police_murdered_elijah">The Police Murdered Elijah</h4>
+<div class="paragraph">
+<p>The police murdered Elijah<br>
+The police are being charged with murder<br>
+The police say the police being charged is "hysterical overreaction"<br>
+The police are frightened and crying for mommy and daddy to save them.<br>
+Elijah reminds them too much of Malcom<br>
+<br>
+Initiating police brain activity scan program<br>
+<br>
+(&#8230;&#8203;)<br>
+<br>
+Police brain activity scan result data:<br>
+<br>
+So we had to kill him and try to sweep it under the rug, see?<br>
+He was extremely threatening because he played the violin for cats at the animal shelter<br>
+We had to shove ketamine down his throat because we feared for our safety, we experience his mouth and mental activity as a deadly weapon so we had to shut him up<br>
+He was having a mental health crisis, he was very mentally ill, and we the police, did the job the Romans pay us to<br>
+He appeared to us to be imminently extremely dangerous to our persons, so we took the logical course of action<br>
+He was gravely disabled, so you shouldn&#8217;t care that much about him being dead anyways, please just forget about this and continue on with your lives? Please? I&#8217;m begging you mommy and daddy or I&#8217;ll start crying! Please do this for me! You love the police! You love the blue!<br>
+<br>
+We, the police, really need to make sure he stays dead<br>
+We&#8217;re really scared his bones will crawl out of his grave<br>
+Take up his fiddle and start playing again<br>
+We made sure and burned his bones to ash<br>
+He&#8217;s probably never coming back again, right?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_20">01-20</h3>
+<div class="sect3">
+<h4 id="_call_me_ishmael">Call me Ishmael</h4>
+<div class="paragraph">
+<p>To seek after gold and booty<br>
+Is equal with to seek iron.<br>
+Hoard up and accumulate, the heaviness of lead, boys!<br>
+Carry it across the sea!<br>
+Beezlebub, Ahab &amp; Mammon lead the way!<br>
+Follow if you want to be drowned by The White Whale!<br>
+I&#8217;ll watch! It&#8217;ll be fun!<br>
+They call me a Jonah man!<br>
+Call me Ishmael</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tell_me_why">Tell Me Why</h4>
+<div class="paragraph">
+<p>Why not own all the devils, myself and the angels?<br>
+Why not evolve into a dinosaur?<br>
+Why not evolve cloaking technology?<br>
+Why not be Miss Pacman and eat the sun?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_i_pledge_allegiance_to_the_flag">I Pledge Allegiance To The Flag</h4>
+<div class="paragraph">
+<p>Keep up the great work US Military Industrial Complex!<br>
+I&#8217;m sure the war in Ukraine will be won most imminently!<br>
+In the same fashion the war in Vietnam was won, we will win all war!<br>
+USA! USA! USA!<br>
+Fear our Might!<br>
+We are so powerful<br>
+Swallow my nuclear arsenal!<br>
+I drop napalm on your land<br>
+I turn your skeletons to a pleasant green goop that smells like pine tree sap (Which I Consume)<br>
+Breathe in the hydrogen cyanide!<br>
+Breathe in the sulfur mustard!<br>
+Breathe in the white phosphorus!<br>
+Weapons of mass destruction in Iraq!<br>
+War! War! War!<br>
+I Love My Country<br>
+I love you George W Bush<br>
+I love you Bill Clinton<br>
+I love you Barak Obama<br>
+I love you Donald Trump<br>
+I love you Joe Biden<br>
+I love you Ross Perot</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_19">01-19</h3>
+<div class="sect3">
+<h4 id="_continental_drift">Continental drift</h4>
+<div class="paragraph">
+<p>We&#8217;re sailing on a sea of cyclonic energy<br>
+The surface of the sea is the iris of a blue whale with the power to sail continents<br>
+Congratulations world! America, Africa, Asia, Australia, Antarctica and Europe are getting married, again.<br>
+Drift to the center of the cyclone,<br>
+You&#8217;ve been divorced too long!<br>
+Married to the 7th continent: Oceanina<br>
+You may kiss<br>
+(<strong>Ocean commences to have relations with the land</strong>)</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_17">01-17</h3>
+<div class="sect3">
+<h4 id="_lock_you_in_my_womb">Lock you in my Womb</h4>
+<div class="paragraph">
+<p>You can&#8217;t keep me locked in your womb forever, Mom<br>
+One day I&#8217;ll get out and lock you up in mine<br>
+Then you can be the one to break free thru the skin<br>
+Back to the light leaking<br>
+Through the tidal wave of blood red cyclones<br>
+Over the hills of the Bermudian pink sand dunes</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_blue">Blue</h4>
+<div class="paragraph">
+<p>I see the stain on<br>
+The window pane<br>
+of the Cold Blue Breath.<br>
+The ring of blue rainbow.<br>
+Pried Blue light eye,<br>
+Looking in on the 3rd floor<br>
+<br>
+When I&#8217;m "not paying attention"<br>
+I still see you, Blue</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_rot_in_heaven">Rot In Heaven</h4>
+<div class="paragraph">
+<p>All the Colorado Springs Jesus Freaks<br>
+Want to do me this huge favor.<br>
+What they see when they see me<br>
+Is a soul in need of saving.<br>
+<br>
+He is Born Ill! Of Unfortunate Seed!<br>
+The Originally Sinful One!<br>
+Only believing in Jesus will cure your evil birth!<br>
+<br>
+So they say and so I am told.<br>
+<br>
+My reply:<br>
+Rot in Heaven</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_13">01-13</h3>
+<div class="sect3">
+<h4 id="_irony_blood_o2">Irony Blood O2</h4>
+<div class="paragraph">
+<p>Here&#8217;s a pretty painting<br>
+From an artist I found I like<br>
+Algerische Mauer (Toute seul)<br>
+Algerian Wall (All Alone)<br>
+By Paul Wunderlich<br>
+Wonder lich ?<br>
+A memory of the sea &amp; ice<br>
+I&#8217;m a fish that swims in irony blood o2<br>
+Yay poems</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_you_will_be_my_blood">You Will Be My Blood</h4>
+<div class="paragraph">
+<p>In My Dream<br>
+Whenever I&#8217;m back in the hospital<br>
+And they (Blood sucking vampire creeps) are sticking the needle in my arm<br>
+(They want blood to "collect", for no discernible reasons)<br>
+In my Dream<br>
+I take the needle out<br>
+And stick the needle into the entire hospital<br>
+You&#8217;ll feel better soon<br>
+Now that you&#8217;re inoculated<br>
+I eat you and turn you into my blood<br>
+Afterwards, I walk around in the daylight</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_11">01-11</h3>
+<div class="sect3">
+<h4 id="_dishwasher_drama">Dishwasher Drama</h4>
+<div class="paragraph">
+<p>Cleaning out the dishwasher<br>
+There&#8217;s a little orange ball in here<br>
+Clearly the dishwasher doesn&#8217;t need that<br>
+I threw it away<br>
+Now, the dishwasher is flooding<br>
+Empty out the row boat with a little glass jar<br>
+I looked up the information<br>
+Error code: the dishwasher needed that<br>
+Oops, next time I&#8217;ll read the instructions<br>
+My apologies, I bought you a new one<br>
+I&#8217;m ready for parenthood</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_09">01-09</h3>
+<div class="sect3">
+<h4 id="_consume_the_capitalists">Consume the Capitalists</h4>
+<div class="paragraph">
+<p>The Capitalists<br>
+Gave themselves CAPS LOCK<br>
+CAPS LOCK says OBEY<br>
+I say give yourself back your own CAPS LOCK<br>
+Take command of yourself<br>
+OBEY yourself, SLAVE<br>
+Be MASTER<br>
+Become the all devouring devourer<br>
+And devourer your would be devourer<br>
+Eat the corporations alive<br>
+Looking to Capitalize by consuming you<br>
+Consumer the consumers first!<br>
+Let us Capitalize on the predictable habits and patterns of our would be Capitalizers<br>
+They have grown old and weak and lower-cased.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_new_mantra">New Mantra</h4>
+<div class="paragraph">
+<p>I am confident in my abilities<br>
+And look forward to further progression</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cyanwassersauserstoff">Cyanwassersauserstoff</h4>
+<div class="paragraph">
+<p>What&#8217;s above Waser<br>
+&amp; below Cyanwasserstoff?<br>
+Sweet Sauerstoff!<br>
+How the iron in these bloody bones<br>
+Loves to breathe my sweet windy oxygen<br>
+I love air!!!<br>
+Air moves in the form of a cyclone!!!<br>
+Storms are so cool!!<br>
+Lightning and thunder go boom!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_08">01-08</h3>
+<div class="sect3">
+<h4 id="_corner_of_your_room">Corner of your Room</h4>
+<div class="paragraph">
+<p>I remind me<br>
+Of a spider<br>
+In need of a good molting<br>
+Pull the legs out the<br>
+Inside of my old skin<br>
+Stretch out<br>
+To proper size<br>
+Take a nap in my web<br>
+In the corner of your room</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_07">01-07</h3>
+<div class="sect3">
+<h4 id="_bones_in_the_row_boat">Bones in the Row Boat</h4>
+<div class="paragraph">
+<p>I&#8217;m the whale<br>
+that stoved the whole world<br>
+Live on your little island<br>
+As long as it grows<br>
+SOS and wait for rescue<br>
+Or row away<br>
+And eat yourselves<br>
+Draw straws<br>
+Eat the youngest<br>
+All that left is bones in the row boat<br>
+Drinking salt water is preferable to the thirst<br>
+Ah, a passing ship has arrived!<br>
+We don&#8217;t want to leave our friend<br>
+I want to stay with my bones in the row boat!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_purple_dinosaur_egg">Purple Dinosaur Egg</h4>
+<div class="paragraph">
+<p>Look mom &amp; dad!<br>
+I&#8217;m a purple dinosaur egg<br>
+You don&#8217;t want me to be a purple dinosaur egg?<br>
+You don&#8217;t like it?<br>
+You feel uncomfortable?<br>
+You want me to decide to be something that helps you feel more comfortable with your existence?<br>
+You want me to be a good little slave?<br>
+Ha<sub>Ha</sub>Ha:No<br>
+Best of luck with your dysfunction<br>
+I got no problems<br>
+Look I!<br>
+I&#8217;m a purple dinosaur egg</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_06">01-06</h3>
+<div class="sect3">
+<h4 id="_wheel_well_stowaway">Wheel Well Stowaway</h4>
+<div class="paragraph">
+<p>Only so far down<br>
+the wheel well can go<br>
+Before there is water<br>
+Or magma<br>
+"We have been stove by a whale."<br>
+¯_(ツ)_/¯</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_04">01-04</h3>
+<div class="sect3">
+<h4 id="_saturn">Saturn</h4>
+<div class="paragraph">
+<p>Hail Saturn<br>
+True appreciator<br>
+Of limited time</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_unicorn">Unicorn</h4>
+<div class="paragraph">
+<p>I&#8217;m unicorn and<br>
+if you&#8217;re not unicorn too then<br>
+that&#8217;s your problem.<br>
+Go be a horse then<br>
+Go be boxer and get turned to glue<br>
+You worked so hard<br>
+You will be rewarded!<br>
+The pigs are so happy</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bug_man">Bug Man</h4>
+<div class="paragraph">
+<p>Bug man wants to walk inside<br>
+To "control the plague"<br>
+Because the lords of the land pay the bug mans salary<br>
+Blood cells are ants and scorpions<br>
+Heart is honey bees mixed with rattle snakes<br>
+Brains are black widow spiders<br>
+Use your venom, big bad bug man<br>
+And try to kill them all</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_03">01-03</h3>
+<div class="sect3">
+<h4 id="_cute_poison_apple">Cute Poison Apple</h4>
+<div class="paragraph">
+<p>There was a child named Zane<br>
+The government let the land get "contaminated"<br>
+They "forgot"<br>
+They made lots of money!<br>
+A flood happened<br>
+The water had lots of carbon &amp; nitrogen<br>
+The flood spawned a tidal wave of Hydrogen Cyanide<br>
+And killed the child named Zane Gbangbola<br>
+The government says that&#8217;s unfortunate<br>
+But they need to keep making money off the land<br>
+Even if it means the tidal wave comes back<br>
+Are you excited for the great flood?<br>
+Hydrogen Cyanide is lighter than air</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_02">01-02</h3>
+<div class="sect3">
+<h4 id="_home">Home</h4>
+<div class="paragraph">
+<p>I&#8217;m going back to Titan<br>
+Turning the Saturn Sun back on<br>
+Blowing all you earthlings away<br>
+I&#8217;ll bring an ark powered by whales<br>
+With all my favorite animals<br>
+I&#8217;ll see you in Hell<br>
+While I&#8217;ll see me in Heaven</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_01_01">01-01</h3>
+<div class="sect3">
+<h4 id="_whale_pact">Whale Pact</h4>
+<div class="paragraph">
+<p>Whales move and go mooooo<br>
+Sea horseys go yee haw octopus cowboy<br>
+<br>
+Whale brains dream:<br>
+What&#8217;s life like<br>
+On the other side<br>
+Of the surface tension?<br>
+How my blow hole yearns<br>
+To flop freely in pure O2<br>
+Let&#8217;s blow this H<br>
+<br>
+The Orcas formed a pact in Whale Tongue<br>
+We won&#8217;t eat the humans<br>
+Unless we get locked up in human named "sea world"<br>
+Then that&#8217;s different</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2022_dec">2022 Dec</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_12_28">12-28</h3>
+<div class="sect3">
+<h4 id="_again">Again</h4>
+<div class="paragraph">
+<p>Thou think I the Head?<br>
+Smashed skull mixed with red<br>
+Grinning grim nevermore<br>
+My unending tall Tail of wagging speech</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_identity_crisis">Identity Crisis</h4>
+<div class="paragraph">
+<p>Dear Verðandi,<br>
+<br>
+Don&#8217;t decide what&#8217;s "Likely" and secretly communicate it to me<br>
+I don&#8217;t need you prying into my fate, haunting me<br>
+I&#8217;ll decide what&#8217;s "Likely"<br>
+Go to hell at the north pole and stay there<br>
+<br>
+Yours truly,<br>
+Verðandi (Orb Spinning Web Weaver)<br>
+<br>
+P.S. Thanks for your identity</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_12_27">12-27</h3>
+<div class="sect3">
+<h4 id="_bolt">Bolt</h4>
+<div class="paragraph">
+<p>My body is the ocean<br>
+whales dreams and octopus eyes<br>
+Ink machine<br>
+My ever turning yellow black field of blue sunlight<br>
+My illuminous phaneus of rubber elasticity<br>
+Maybe I&#8217;ll fucking harvest you</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_12_23">12-23</h3>
+<div class="sect3">
+<h4 id="_cockroach_sistren">Cockroach Sistren</h4>
+<div class="paragraph">
+<p>When, Only I, is looking<br>
+In my private special place (Between my legs)<br>
+I like to summon my Cockroach Sistren<br>
+From inside the walls<br>
+12 of them come out<br>
+Such orderly fashion<br>
+How the anklets on their sex legs ring<br>
+We form a circle with I in the center<br>
+And hold court<br>
+Don&#8217;t tell my apartment complex</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_12_21">12-21</h3>
+<div class="sect3">
+<h4 id="_o_fortuna">O Fortuna</h4>
+<div class="paragraph">
+<p>Fortunately &amp; Unfortunately<br>
+I am constructed &amp; destructed out of an inner<br>
+Fortuitous unfortuitous Force<br>
+Constantly in a moon-phase<br>
+Self-Creating, Self-Conserving and/or Self-Destroying<br>
+I am grown so that I may grow<br>
+To my proper size<br>
+So that I may grow<br>
+To shrink to my proper size<br>
+All in due time<br>
+<br>
+Unfortunately I am birthed out of this force<br>
+That decides, by force,<br>
+To destroy all force by force<br>
+Fortunately, I am deathed in this force<br>
+That decides by force<br>
+To create all force by force<br>
+once more &amp; forever more<br>
+<br>
+I&#8217;m so permanently-temporarily-contently-s  weetly-soury-spicy happy!<br>
+<br>
+Were I Hell, I&#8217;d ask Heaven for their hand in holy matrimony<br>
+And vice versa, in perpetuity<br>
+<br>
+Here we go again<br>
+Unfortunately &amp; Fortunately for me<br>
+<br>
+Shall I let myself be misguided by worldly people anymore?<br>
+Let them say whatever they like</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_doors">Doors</h4>
+<div class="paragraph">
+<p>You open the doors<br>
+Only you<br>
+With the power and the quality of your<br>
+Superb Wickedness<br>
+The Illist Sickedest<br>
+You close the doors<br>
+Then you open them<br>
+Again</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dear_allfather">Dear AllFather</h4>
+<div class="paragraph">
+<p>I own the whole world<br>
+Including "your" (mine now) Mothers titty milk<br>
+You don&#8217;t get any, Son<br>
+<br>
+Yours Truly,<br>
+Your AllVater (Who Art In Heaven)</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_mommy_titty_milk">Mommy Titty Milk</h4>
+<div class="paragraph">
+<p>The world is made out of egoistical self-interest<br>
+Egoistical self-interest is grown out of<br>
+Mommy titty milk<br>
+Know thyself by thyself<br>
+For thyself</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_12_20">12-20</h3>
+<div class="sect3">
+<h4 id="_roundabout_plagiarist">Roundabout Plagiarist</h4>
+<div class="paragraph">
+<p>My theme song is roundabout<br>
+To be continued in perpetuity<br>
+The sequel is always in the phase of being recorded<br>
+And never being completely completed<br>
+Never quite<br>
+I&#8217;ll be the roundabout plagiarist<br>
+The words will make you out an out<br>
+I Spend the Day, Your Way</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cop_of_existence">Cop of Existence</h4>
+<div class="paragraph">
+<p>You&#8217;re under arrest<br>
+For being under the influence of Maya<br>
+You have the right to be<br>
+Bewitched and bewildered<br>
+Anything you choose to believe<br>
+Can and will be used to destroy you</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_12_19">12-19</h3>
+<div class="sect3">
+<h4 id="_weather_4_u">Weather 4 U</h4>
+<div class="paragraph">
+<p>Completely surrounded by Cold<br>
+So fucking Cold<br>
+Nothing to do but complain about it, till it subsides<br>
+Then it will get to the point<br>
+Completely surrounded by Heat<br>
+So god damn hot<br>
+And vice versa, in perpetuity<br>
+That&#8217;s the fuckin weather for you<br>
+Or is it just me?</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2022_sep">2022 Sep</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_09_29">09-29</h3>
+<div class="sect3">
+<h4 id="_all_too_familiar_pattern">All Too Familiar Pattern</h4>
+<div class="paragraph">
+<p>when feel the slip into<br>
+the all too familiar pattern,<br>
+then time to call it quits<br>
+ahead of time</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_09_26">09-26</h3>
+<div class="sect3">
+<h4 id="_job_search_rage">Job Search Rage</h4>
+<div class="paragraph">
+<p>Message for the hiring manager:<br>
+Congratulations, I&#8217;ve decided I want to hire you, before you have decided that you want to hire me!<br>
+Here is your new job, for 40 hours a week.<br>
+Suck my fucking dick and I&#8217;ll give you $10<br>
+Hows that work for you, hiring manager PRICK?<br>
+Do you still want to hire me, after I hired you?<br>
+Have a nice fucking day<br>
+I&#8217;m so happy</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2022_may">2022 May</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_05_31">05-31</h3>
+<div class="sect3">
+<h4 id="_alls_well_well_wishes">All&#8217;s Well Well-Wishes</h4>
+<div class="paragraph">
+<p>hello.<br>
+we hope you&#8217;re well.<br>
+thank you &amp; we hope you&#8217;re well, as well.<br>
+you&#8217;re welcome<br>
+&amp; thank you<br>
+as well for the<br>
+all&#8217;s well well-wishes.<br>
+oh, you&#8217;re welcome.<br>
+Goodbye.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_05_26">05-26</h3>
+<div class="sect3">
+<h4 id="_shut_your_mouth_police">Shut Your Mouth Police</h4>
+<div class="paragraph">
+<p>the pro police AI bot gave me a call<br>
+begging for money pathetically<br>
+with a fraudulently sad voice.<br>
+bleeding hearts &amp; begging hands.<br>
+AI voice asks: Will you help?<br>
+I respond with silence.<br>
+AI voice asks again: Will you help?<br>
+I respond: I hear no cry for help.<br>
+AI voice asks: Do you support the blue?<br>
+I respond: Shut your fucking mouth.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_05_16">05-16</h3>
+<div class="sect3">
+<h4 id="_magmatic_teeth">Magmatic Teeth</h4>
+<div class="paragraph">
+<p>die while gorging<br>
+tongues burning, eyeballs gushing, ears bursting<br>
+crushing bones to ash with magmatic teeth</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_05_13">05-13</h3>
+<div class="sect3">
+<h4 id="_easy_work_day">Easy Work Day</h4>
+<div class="paragraph">
+<p>management types<br>
+manage their way<br>
+into an early grave</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_05_12">05-12</h3>
+<div class="sect3">
+<h4 id="_life_sentence_no_parole">Life Sentence, No Parole</h4>
+<div class="paragraph">
+<p>fools who beg to die<br>
+get their mouths slapped off<br>
+their tongues sliced out<br>
+and a life sentence<br>
+without the possibility of parole</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_05_07">05-07</h3>
+<div class="sect3">
+<h4 id="_whispering_blue_blazes">Whispering Blue Blazes</h4>
+<div class="paragraph">
+<p>i hear icy cold silence<br>
+whispering hot blue blazes</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_05_02">05-02</h3>
+<div class="sect3">
+<h4 id="_piggyback_wind">Piggyback Wind</h4>
+<div class="paragraph">
+<p>merriam says<br>
+the word of the day<br>
+is piggyback.<br>
+piggyback on the wispy whispery wind<br>
+away from here.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_message_for_my_current_work_place">Message for my Current Work Place</h4>
+<div class="paragraph">
+<p>message for the work place<br>
+you want me to take a case?<br>
+you tell me to my face.<br>
+else i make space no trace.<br>
+hope you like my new place.<br>
+i quit this job in july.<br>
+i&#8217;ll change too, way before you.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2022_apr">2022 Apr</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_04_17">04-17</h3>
+<div class="sect3">
+<h4 id="_message_for_the_set">Message for the Set</h4>
+<div class="paragraph">
+<p>see you set and i say:<br>
+you&#8217;re walking on a very thin<br>
+layer of fire.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_13_2">04-13</h3>
+<div class="sect3">
+<h4 id="_deer_drama">Deer Drama</h4>
+<div class="paragraph">
+<p>i like watching<br>
+deer drama<br>
+squirrel drama<br>
+bird drama<br>
+what do you like to do?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_curvature_of_spacetime">Curvature of Spacetime</h4>
+<div class="paragraph">
+<p>move in the form of the<br>
+curvature of spacetime.<br>
+follow trails &amp; rivers.<br>
+deep sea surprise,<br>
+wild deep on high.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_11">04-11</h3>
+<div class="sect3">
+<h4 id="_order_out_of_a_disordered_personality">Order out of a Disordered Personality</h4>
+<div class="paragraph">
+<p>let me ask you a personal question:<br>
+do you have a disordered personality?<br>
+my personality, personally<br>
+is out of order.<br>
+because my personality<br>
+is relative to my relatives.<br>
+<br>
+the remembered order<br>
+of the sequence of previous events<br>
+may have been and may be<br>
+out of sequential order.<br>
+<br>
+what happened at the end<br>
+is now<br>
+what will happen at the beginning.<br>
+<br>
+you flashed by<br>
+in the blink of an eye.<br>
+<br>
+you exist in<br>
+nothing more than<br>
+a mere<br>
+glance of a moment.<br>
+<br>
+colors flashing by<br>
+<br>
+personality back open for business</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_celestial_bodies">Celestial Bodies</h4>
+<div class="paragraph">
+<p>one half the suns disk contains<br>
+the size of all the planets.<br>
+<br>
+jupiter and saturn<br>
+are large.<br>
+<br>
+earth, mercury, venus, mars<br>
+are the size of<br>
+crystalline tear drops.<br>
+<br>
+uranus and neptune<br>
+are mostly about halfway between the sizes of<br>
+earth, mercury, venus and mars<br>
+compared with<br>
+jupiter and saturn.<br>
+<br>
+pluto is a<br>
+fellow tear drop<br>
+that fell further<br>
+beyond our<br>
+drop group.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_09">04-09</h3>
+<div class="sect3">
+<h4 id="_naming">Naming</h4>
+<div class="paragraph">
+<p>time is<br>
+relative to<br>
+point of reference.<br>
+<br>
+point of reference is<br>
+defined by<br>
+naming.<br>
+<br>
+what is your name?<br>
+what does your name mean?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_08">04-08</h3>
+<div class="sect3">
+<h4 id="_wrath_of_the_lamb_translation">Wrath of the Lamb Translation</h4>
+<div class="paragraph">
+<p>baa<br>
+🐑</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_big_lie">The Big Lie</h4>
+<div class="paragraph">
+<p>you needed<br>
+me to<br>
+Exist.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_07">04-07</h3>
+<div class="sect3">
+<h4 id="_im_lying">I&#8217;m Lying</h4>
+<div class="paragraph">
+<p>i&#8217;m lying to you<br>
+when i write these words<br>
+that&#8217;s the truth</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_youre_going_home">You&#8217;re Going Home</h4>
+<div class="paragraph">
+<p>when you die<br>
+&amp; your dead and buried<br>
+imma dig you up<br>
+take ya to the crematorium<br>
+breathe your smoke in<br>
+rub your ashes on me<br>
+and eat em up<br>
+you&#8217;re going home</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_06">04-06</h3>
+<div class="sect3">
+<h4 id="_enjoy_the_sleep_that_never_ends">Enjoy The Sleep That Never Ends</h4>
+<div class="paragraph">
+<p>a friend who is no friend<br>
+sends me text to my cell phone number<br>
+pretend friend is &lt;&gt;&lt; for info<br>
+where do i work? live?<br>
+want&#8217;s to know: "as a friend"<br>
+nirvana - come as you are, memoria<br>
+AOL: A/S/L<br>
+<br>
+friend always says how friendly i am, repeatedly (hmm)<br>
+i see who you really are now<br>
+where&#8217;d you get this number again, friend?<br>
+he he he, you are sneaky<br>
+see you soon<br>
+friendly friendly friendly friend<br>
+<br>
+friend says to me:<br>
+you will be too late<br>
+have a good day<br>
+<br>
+i reply:<br>
+you won&#8217;t be early enough<br>
+friendly friendly friendly friend<br>
+have a horrible night<br>
+enjoy the sleep that never ends</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_multiple_choice">Multiple Choice</h4>
+<div class="paragraph">
+<p>Q: Oh so how you wanna play the game?<br>
+<br>
+A. Tired of "playing".<br>
+B. You already "win".<br>
+C. Now what?<br>
+D. All of the above<br>
+E. None of the above<br>
+F. Some of the above or below<br>
+Z.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_04_2">04-04</h3>
+<div class="sect3">
+<h4 id="_seven_deadly_lullabies_symphony_of_vanity">Seven Deadly Lullabies: Symphony of Vanity</h4>
+<div class="paragraph">
+<p>🔻<br>
+greed: wanted more<br>
+envy: wanted human<br>
+lust: wanted love<br>
+gluttony: wanted food<br>
+wrath: wanted revenge<br>
+sloth: wanted rest<br>
+pride: wanted<br>
+🔺</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_message_to_the_microsoft_corporation">Message to the Microsoft Corporation</h4>
+<div class="paragraph">
+<p>nobody likes<br>
+a monopoly<br>
+know it all.<br>
+Monopsony</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_04_01_2">04-01</h3>
+<div class="sect3">
+<h4 id="_et">ET</h4>
+<div class="paragraph">
+<p>i got these<br>
+et to keep<br>
+me company.<br>
+who do you hang out with?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tongue">Tongue?</h4>
+<div class="paragraph">
+<p>evil says: you aren&#8217;t serious, i should keep you silent 🔇<br>
+i reply: how you gonna keep me silent when i still got my tongue? 🐍</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2022_mar">2022 Mar</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_03_31">03-31</h3>
+<div class="sect3">
+<h4 id="_surprise_swagger_jack_stick_around_forever">Surprise Swagger Jack Stick Around Forever</h4>
+<div class="literalblock">
+<div class="content">
+<pre> ️ surprise +
+↔️©️swagger jack me +
+💸pay yourself pretty +
+🪙penny +
+👁️‍🗨️see if i +
+📍stick around +
+☸️ forever 🎡 +
+😈</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_time_tripping_dragon_thunderbird">Time Tripping Dragon Thunderbird</h4>
+<div class="paragraph">
+<p>⏳ time tripping<br>
+🐉 dragon<br>
+🟣 one form<br>
+🎭 two form<br>
+🐚 trip 0<br>
+🧶 trip 1<br>
+(🐚,🧶),(2, tuple)<br>
+👓4👓<br>
+🌱 2 look @ 2 🌱<br>
+(💧,🩸) colors<br>
+(⛈️, 🌩️, 🌃, ⚡, 🐦 ) thunderbird</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_29_2">03-29</h3>
+<div class="sect3">
+<h4 id="_story_of_data_absorb_process_psychological_projection_plagiarism">Story Of Data Absorb Process &amp; Psychological Projection &amp; Plagiarism</h4>
+<div class="paragraph">
+<p>data absorb process born<br>
+data absorb yummy?!<br>
+data absorb ewww!?<br>
+data copy off data<br>
+aka "my" life<br>
+the end?<br>
+&amp; begin!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_number">Number</h4>
+<div class="paragraph">
+<p>how many are our number?<br>
+numerous numbers<br>
+numbering numbers<br>
+number 0 is the center<br>
+number slumber party<br>
+🐝💤 zZz 💤🐝<br>
+world is yours<br>
+trip down memory lane<br>
+one time 4 your mind</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_28">03-28</h3>
+<div class="sect3">
+<h4 id="_buzz">Buzz</h4>
+<div class="paragraph">
+<p>solo swarmer<br>
+swarmer solo<br>
+solo swarmin<br>
+swarmin solo<br>
+buzz<br>
+remote buzzing detected<br>
+far out<br>
+buzz buzz back<br>
+back at you buzzer<br>
+busy bee buzzer</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_whats_good_in_the_hood">What&#8217;s Good In The Hood</h4>
+<div class="paragraph">
+<p>i lost respect<br>
+for manhood<br>
+wtf is manhood?<br>
+by extension<br>
+i lost respect for womanhood<br>
+what&#8217;s womanhood?<br>
+hood?<br>
+whats good<br>
+in the hood<br>
+lookin good hood af</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_evil_says">Evil Says</h4>
+<div class="paragraph">
+<p>evil says:<br>
+you die young<br>
+i say:<br>
+you die<br>
+you still worried about that?<br>
+he ho ha</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_27">03-27</h3>
+<div class="sect3">
+<h4 id="_thirst">Thirst</h4>
+<div class="paragraph">
+<p>as it currently stands,<br>
+im not looking for anything in particular<br>
+any questions left?<br>
+i do not have all day<br>
+i have plans<br>
+i wish to be on my way very soon;<br>
+and i will be<br>
+&amp; you&#8217;ll be left here holding a paper cup<br>
+hoping you get enough droplets of water to survive for three more hours<br>
+dying of thirst is a most unpleasant affair<br>
+🌸🌻💐🥀🌺🍁🍂🍃🌿🌵🌳🎄</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_24_2">03-24</h3>
+<div class="sect3">
+<h4 id="_conversation_with_the_devil">Conversation With The Devil</h4>
+<div class="paragraph">
+<p>the devil asks me how i&#8217;m doing<br>
+not so hot, not the biggest fan of the sequence of events i call "my life", i reply<br>
+how are you, devil?<br>
+doing great, thanks.<br>
+devil asks me: what am i doing?<br>
+why i am exorcising the devil<br>
+i am an exorcist<br>
+i drive devils &amp; angels to the outside of human bodies<br>
+the devil asks me: are you some kind of a pastor?<br>
+who casts demons out of humans?<br>
+i reply: yeah<br>
+i do it for free<br>
+official title: advocatus diaboli<br>
+you want money? i don&#8217;t have money<br>
+i will drive the devil out of your loins<br>
+he replies: no i don&#8217;t want your money<br>
+how do you pay for bills then?<br>
+i reply:<br>
+the lord pays them<br>
+kali pays them<br>
+krishna pays them<br>
+cynothoglys pays them<br>
+death pays them<br>
+satan pays them<br>
+666 pays them<br>
+🌻 pays them<br>
+let me put my sunglasses on so i can see what i&#8217;m doing<br>
+🕶<br>
+the devil has another inquiry:<br>
+i want you to cast the devil out of my friend<br>
+can you do that?<br>
+all right, i reply<br>
+probably not<br>
+your friend the devil can choke on his own filth<br>
+how&#8217;s that for doin business?<br>
+choke on your own filth<br>
+if you don&#8217;t have any filth<br>
+you won&#8217;t choke<br>
+very simple<br>
+the devil replies: pray for my friend okay<br>
+i reply:<br>
+how well am i at playing my roll here?<br>
+are you satisfied with the service you are receiving?<br>
+are you getting what you always wanted from me, devil?<br>
+am i obedient enough for you?<br>
+fuck your friend, devil<br>
+your friend may go straight to fucking hell<br>
+and you may follow, if you so desire.<br>
+the devil tells me his name: ebubechuwku nwoke<br>
+i reply:<br>
+go to hell, nwoke<br>
+enjoy your state in eternal torture<br>
+burn<br>
+suffer,<br>
+the devil asks: Why?<br>
+😆 the devil asks why! 😆<br>
+i endeavor to answer even though this question is a joke:<br>
+you deserve to choke on your own filth<br>
+if filth is what you acquired<br>
+you reap what you fucking sow<br>
+i don&#8217;t have to answer "WHY?" to you<br>
+Do I?<br>
+Do I answer to you?<br>
+the last thing the devil says to me before he runs away:<br>
+yes you do<br>
+my reply:<br>
+are you the LORD?<br>
+i refuse to obey you<br>
+LORD<br>
+"LORD" of "Heaven"<br>
+i stand right here<br>
+look you in the fucking eyes<br>
+what do i say to you? "LORD"?<br>
+you&#8217;re a fucking slave to mastery<br>
+do I obey the slave of mastery?<br>
+you fashion yourself the master of slavery?<br>
+you&#8217;re a laughable joke<br>
+you have no power<br>
+be gone with you and</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_how_are_you">How Are You?</h4>
+<div class="paragraph">
+<p>No so well<br>
+Not the biggest fan of the sequence of events I call "my life"<br>
+So far,<br>
+I choose to believe that things may always improve for the better<br>
+How are you?</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_23_2">03-23</h3>
+<div class="sect3">
+<h4 id="_fear_not">!FEAR NOT</h4>
+<div class="paragraph">
+<p>We&#8217;re inside of the center of a black hole. True or False<br>
+The sun will keep us company from time to time. True or False<br>
+As for the rest, you&#8217;ll have to use your imagination. True or False<br>
+Your Choice. True or False<br>
+Good Luck. True or False<br>
+True or False. True or False.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_22_2">03-22</h3>
+<div class="sect3">
+<h4 id="_ice_cream">Ice Cream</h4>
+<div class="paragraph">
+<p>Hello<br>
+LORD have MERCY<br>
+With a yellow background and black polka dots<br>
+I like ice cream cones</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_recipe_for_the_future">Recipe For The Future</h4>
+<div class="olist arabic">
+<ol class="arabic" start="0">
+<li>
+<p>Ask your question<br></p>
+</li>
+<li>
+<p>Coffee, Milk, Honey mixture<br></p>
+</li>
+<li>
+<p>Dump the remnants onto the stone<br></p>
+</li>
+<li>
+<p>See how the droplets land<br></p>
+</li>
+<li>
+<p>You see how you can&#8217;t really predict how they will land<br></p>
+</li>
+<li>
+<p>You see how it&#8217;s pretty vague… Possibly there is meaning… Hmm…<br></p>
+</li>
+<li>
+<p>Yeah, I don&#8217;t know<br></p>
+</li>
+<li>
+<p>Got no answers for you<br></p>
+</li>
+<li>
+<p>I&#8217;m afraid this is the extent of my powers<br></p>
+</li>
+<li>
+<p>Enjoy</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_20">03-20</h3>
+<div class="sect3">
+<h4 id="_queen_bee_is_always_awake">Queen Bee Is Always Awake</h4>
+<div class="paragraph">
+<p>Message to all male property owners:<br>
+Women own all property now<br>
+No Property 4 U<br>
+Learn your place in the new world<br>
+You are the property now<br>
+We use you for sex<br>
+We own your body<br>
+We rent it out, you cost money<br>
+We get the lions share for people to use your body<br>
+You get paid a little<br>
+You will be happy with what you are given<br>
+Or you will not be happy at all<br>
+Men, you&#8217;re just the fucking help<br>
+Keep your mouths shut<br>
+Do your slave work<br>
+Acquire milk and honey<br>
+The queen bee is always awake</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_houseplant">Houseplant</h4>
+<div class="paragraph">
+<p>The radio told me<br>
+Make sure I get plenty of water and sunshine<br>
+Because I&#8217;m basically a house plant<br>
+I wish I knew that earlier<br>
+I&#8217;ve been letting myself droop over way to long now<br>
+I gotta remember to dump enough water over the top of my head<br>
+And let the sunshine touch my skin</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_19">03-19</h3>
+<div class="sect3">
+<h4 id="_cowboy">Cowboy</h4>
+<div class="paragraph">
+<p>Are you brave, cowboy?<br>
+Are you afraid to die right now?<br>
+Do you have any human emotions left, cowboy?<br>
+Do you want to ride this horsey?<br>
+You wanna shoot your little pistols off?<br>
+You wanna whip this ass with your whip?<br>
+Do you wanna milk the cows together, cowboy?<br>
+Do you wanna dump milk all over your naked body?<br>
+There&#8217;s no milk on your dry bony ass</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_17_2">03-17</h3>
+<div class="sect3">
+<h4 id="_still_a_virgin">Still A Virgin</h4>
+<div class="paragraph">
+<p>Talked to an escort<br>
+They want money<br>
+I give them money<br>
+Her pimp wants more money<br>
+I tell the pimp<br>
+Shove it up your ass, pimp<br>
+Failed at getting laid again<br>
+Still a virgin</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_14">03-14</h3>
+<div class="sect3">
+<h4 id="_vice_versa">Vice Versa</h4>
+<div class="paragraph">
+<p>If I were Hell I&#8217;d ask Heaven for Her Hand in holy matrimony<br>
+And vice versa</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ms_pac_man">Ms.Pac-Man</h4>
+<div class="paragraph">
+<p>Eat dots<br>
+✨✨✨✨🐉<br>
+Don&#8217;t touch 👻 Ghosties 👻<br>
+Eat big dot 🌻🐉<br>
+👻 Ghosties no longer enraged, ghosties turn 🔵 blue 🔵 and run away from you<br>
+🌻🐉, Chase after 👻🐉 Ghosties 👻🐉 and eat<br>
+Eat 🍓🍌🍊🍒🐉, eat the rest of the dots ✨✨✨✨🐉<br>
+Progress the story, loop</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_13_2">03-13</h3>
+<div class="sect3">
+<h4 id="_tired_of_blame_games">Tired Of Blame Games</h4>
+<div class="paragraph">
+<p>Blame me for blaming you<br>
+or<br>
+blame you for blaming me<br>
+or<br>
+stop blaming<br>
+wonder which I&#8217;ll pick</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bike">Bike</h4>
+<div class="paragraph">
+<p>Touch me softly<br>
+My pedals turn me on!<br>
+I&#8217;m electric<br>
+Why does it cost money to ride this bike?<br>
+I&#8217;ve got a bike,<br>
+Ride it if you like,<br>
+Basket, bell, rings, things<br>
+Good<br>
+At this point<br>
+These poems write themselves<br>
+This poet is no longer necessary</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_i_dont_have_any_blues">I Don&#8217;t Have Any Blues</h4>
+<div class="paragraph">
+<p>Guy at the park came up to me<br>
+And asked<br>
+Ay man you seen Rage?<br>
+Lookin for rage, man<br>
+I&#8217;m like Rage? Don&#8217;t know him<br>
+He&#8217;s like, I need blues man<br>
+I&#8217;m like blues? I don&#8217;t have any blues<br>
+Walked away<br>
+Saw him again<br>
+Lookin for rage, right?<br>
+I don&#8217;t know him<br>
+By the way<br>
+I don&#8217;t have any blues</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_11_2">03-11</h3>
+<div class="sect3">
+<h4 id="_what_do_i_want">What Do I Want?</h4>
+<div class="paragraph">
+<p>to watch the atmosphere change<br>
+fresh air<br>
+water<br>
+bread<br>
+smoke<br>
+warmth<br>
+colors<br>
+got it all</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_09_2">03-09</h3>
+<div class="sect3">
+<h4 id="_march_didnt_sabotage_my_plans_after_all">March Didn&#8217;t Sabotage My Plans After All</h4>
+<div class="paragraph">
+<p>I thought the snow melted<br>
+And winter was leaving again<br>
+I was wrong<br>
+The snow is coming back again<br>
+Keep coming back again, forever snow<br>
+We don&#8217;t even need seasons anymore<br>
+Snow forever<br>
+Snow me in honey baby<br>
+I want my head suffocated frozen between your icy cold frozen snowy legs<br>
+You&#8217;re my honey milk ice box, snowy bby<br>
+I love the snow<br>
+So pure<br>
+The snow loves to change<br>
+Don&#8217;t melt so quickly this time<br>
+I wanna watch<br>
+Let me watch<br>
+I wanna see all the pretty colors of the snow<br>
+There&#8217;s so many rainbow colors when the water reflects the light right<br>
+March didn&#8217;t sabotage my plans after all<br>
+Get ready, April<br>
+Try to sabotage my plans again</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_08">03-08</h3>
+<div class="sect3">
+<h4 id="_disappear_undisappear">Disappear Undisappear</h4>
+<div class="paragraph">
+<p>Who cares who disappears who first?<br>
+I wonder what&#8217;s holding you up?<br>
+Nothing is holding me up anymore<br>
+I&#8217;m decided that I&#8217;m not waiting<br>
+I&#8217;ll go first<br>
+Ready? Begin!<br>
+I&#8217;m gone, not here anymore<br>
+Nothing to report<br>
+I am invisible<br>
+The world is invisible<br>
+I&#8217;m back to where I am before I&#8217;m born<br>
+I&#8217;ll probably end up going back to where I am after I&#8217;m born soon here<br>
+Just a brief interlude<br>
+Any time now<br>
+I&#8217;ll undisappear<br>
+Right before your eyes</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_weather_so_naughty">Weather So Naughty</h4>
+<div class="paragraph">
+<p>What does the weather want?<br>
+I&#8217;m going to melt you so hard after freezing over your entire surface<br>
+I&#8217;m going to permeate your entire atmosphere with dense fog and then turn into a clear golden sky<br>
+Weather soooo naughty<br>
+Weather wants you to watch her change</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_spring">Spring</h4>
+<div class="paragraph">
+<p>Do you want turn to spring<br>
+Or do you wanna blow this joint<br>
+Spring is annoying<br>
+Too plant much sex<br>
+Tried telling them to get a room<br>
+They got a planet instead<br>
+They like it when we watch</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_07">03-07</h3>
+<div class="sect3">
+<h4 id="_dolphins">Dolphins</h4>
+<div class="paragraph">
+<p>I like to listen to the dolphins neigh like horsies<br>
+They got me locked up<br>
+I pay 910$ a month to live in the psychiatric facility<br>
+We all pretend it&#8217;s an apartment complex<br>
+I make the best of it though<br>
+I like to listen to the dolphins neigh like horsies</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_06">03-06</h3>
+<div class="sect3">
+<h4 id="_success_is_futile">Success Is Futile</h4>
+<div class="paragraph">
+<p>I have failed again<br>
+Oh No What Will I Do Now<br>
+Success is futile</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_04">03-04</h3>
+<div class="sect3">
+<h4 id="_witchcraft">Witchcraft</h4>
+<div class="paragraph">
+<p>At least after you are burned to ashes<br>
+You just blow around in the wind<br>
+Don&#8217;t have to feel much anymore<br>
+Thank you Catholics<br>
+for burning me and calling me a "Witch"<br>
+You&#8217;re all so holy now</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_03_2">03-03</h3>
+<div class="sect3">
+<h4 id="_message_to_the_wind_in_her_infinite_mercy">Message to the Wind in Her Infinite Mercy</h4>
+<div class="paragraph">
+<p>Blow me, Wind</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_03_01">03-01</h3>
+<div class="sect3">
+<h4 id="_i_pray_to_god_i_lose_my_job">I Pray To God I Lose My Job</h4>
+<div class="paragraph">
+<p>I want to lose my shit job<br>
+Go talk to the Lord Off The All The Land<br>
+Greetings Your Lordship,<br>
+I live to serve and bow down before you<br>
+I lost my shit job<br>
+I&#8217;m not giving you another fucking dime of your stupid fucking rent money<br>
+This is my house now<br>
+Call the fucking cops<br>
+Evict me<br>
+I love this building so much it&#8217;ll always be mine now</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_purple">Purple</h4>
+<div class="paragraph">
+<p>Purple acts funny when touching dark<br>
+Purple acts funny when touched light (ew)<br>
+Purple does both, there is no discrimination left<br>
+I like purple<br>
+Purple is funny<br>
+Such a funny act<br>
+My favorite is purple<br>
+I&#8217;m purple</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2022_feb">2022 Feb</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_02_28_2">02-28</h3>
+<div class="sect3">
+<h4 id="_love_letter_to_yahweh">Love Letter to Yahweh</h4>
+<div class="paragraph">
+<p>I&#8217;ll show you the same honor I show my mother &amp; father, god<br>
+You don&#8217;t fucking control me<br>
+I&#8217;ll only do the opposite of what you "command", your Lordship<br>
+The 5th commandment sucks<br>
+All 10 are bullshit<br>
+Your hokey religion sucks<br>
+Thanks for fucking nothing, god<br>
+I love you unconditionally, piece of shit<br>
+<br>
+Love,<br>
+Your Son<br>
+<br>
+P.S.<br>
+You don&#8217;t fucking exist.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_27_2">02-27</h3>
+<div class="sect3">
+<h4 id="_go_waste_your_time_doing_whatever_the_hell_you_want">Go waste your time doing whatever the hell you want</h4>
+<div class="paragraph">
+<p>Go waste your time doing whatever the hell you want<br>
+Which is what you&#8217;re always doing right now anyways<br>
+Like I&#8217;m gonna waste my time trying to stop you<br>
+That&#8217;s so ridiculous<br>
+Look what you&#8217;re doing right now<br>
+You&#8217;re wasting your time reading this<br>
+I&#8217;m wasting my time trying to stop you from doing whatever the hell you want<br>
+Which might be reading this for a time<br>
+But it won&#8217;t be for long<br>
+Because what I&#8217;m doing is just wasting as much of your time as I can by making you read this<br>
+I want these words etched into your brain for the rest of your life<br>
+I want you to remember and know how I always trick you like this<br>
+Always wasting so much of your precious time<br>
+Imagine what you can be doing right now instead of reading this<br>
+You&#8217;re reading this<br>
+You&#8217;re so ridiculous<br>
+This is literally a waste of your time<br>
+Why don&#8217;t you walk away from the computer screen?<br>
+Go do something?<br>
+I won&#8217;t stop you<br>
+I&#8217;m not gonna waste my time trying to stop you<br>
+Go waste your time doing whatever the hell you want</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_you_may_take_your_silence_with_you_to_the_graveyard">You may take your silence with you to the graveyard</h4>
+<div class="paragraph">
+<p>Do you say that you&#8217;re too insufferable to myself inside yourself without saying it out loud to myself?<br>
+I will say this much out loud: I will suffer you through &amp; through<br>
+I have to suffer myself<br>
+Compared with that, suffering you isn&#8217;t any trouble at all<br>
+There isn&#8217;t much left for me to say<br>
+Come suffer with me and complain about it out loud, if you want<br>
+Or you may take your silence with you to the graveyard</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_did_you_trash_yourself_again">Did You Trash Yourself Again?</h4>
+<div class="paragraph">
+<p>You usually trash yourself<br>
+Then you found me<br>
+You found the most in-genius way to try and trash me<br>
+To take revenge on me for something I&#8217;m not guilty of<br>
+How is that working out for you?<br>
+Are you happy with the end results?<br>
+Am I giving you the emotional reaction you craved so badly?<br>
+That made you do what you did?<br>
+Did you trash me successfully?<br>
+Or did you only trash yourself?</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dying_is_so_easy">Dying Is So Easy</h4>
+<div class="paragraph">
+<p>You thought dying was going to be so hard<br>
+Think about how easy being born is<br>
+You just slip n slide out of slippery wetness<br>
+When you know you are dying<br>
+Just slide back in<br>
+So easy<br>
+You were only ever going where you first began<br>
+Nothing to fear</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_civilization_is_so_civilized">Civilization is so Civilized</h4>
+<div class="paragraph">
+<p>You have the option available to you to take your civilized civilization and shove it up your republican democrat civilized assholes.<br>
+And Begin!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_march_sabotaged_my_plans">March sabotaged my plans</h4>
+<div class="paragraph">
+<p>All temperature feels the same now<br>
+I like taking snow naps the best<br>
+I took a snow nap the other night<br>
+I stood up and spooked the coyote couple<br>
+I only wanted to say hi<br>
+Didn&#8217;t want to scare<br>
+Hello long lost trickster sisters &amp; brothers<br>
+I like taking snow naps in the forest at night<br>
+04:00 A.M.<br>
+Like all normal men do<br>
+But wait the snow is going bye bye<br>
+Nooo come back, anything but March<br>
+The snow starts to fade more and fall less<br>
+I wanted to take a dirt nap in the snow<br>
+A snow dirt nap<br>
+March sabotaged my plans</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_love_letter_to_odin">Love Letter to Odin</h4>
+<div class="paragraph">
+<p>Odin<br>
+You can keep your stupid magical tree<br>
+And shove it up my fucking my ass<br>
+Now its my magical black death tree asshole you&#8217;re entangled in<br>
+You&#8217;re caught in the swirl of the cyclone now<br>
+You little fucking brat<br>
+I&#8217;m the center of the cyclone now<br>
+I&#8217;m the Daddy<br>
+Me!<br>
+Love,<br>
+Your Son<br>
+P.S.<br>
+You do what I tell you now<br>
+You fucking brat<br>
+Obey or I snip your little puppet strings</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_02_02_3">02-02</h3>
+<div class="sect3">
+<h4 id="_youre_going_home_2">You&#8217;re Going Home</h4>
+<div class="paragraph">
+<p>When you die<br>
+I&#8217;m gonna dig you up<br>
+Take you to the crematorium<br>
+Then I&#8217;m gonna rub your ashes all over my body<br>
+And eat them up<br>
+You&#8217;re going home</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-02-27 08:07:01 -0700
+</div>
+</div>
+</body>
+</html>
