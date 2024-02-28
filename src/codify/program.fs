@@ -82,16 +82,18 @@ module Entry =
             TimeSpan.FromDays(float (day.Day - 1))
 
         (*Changes date day of month to be one and hour:minute:second of time to be 00:00:00 *)
-        let updated =
-            day
-                .ToDateTime(TimeOnly(0, 0, 0))
+        let dt =
+            DateTimeOffset(day.ToDateTime(TimeOnly(0, 0, 0)))
+        let codified = 
+            dt
                 .Subtract(days)
                 .ToUniversalTime()
-(*                 .Add(day.Offset) *)
-        Date.ofDateTime (DateTimeOffset(updated))
-
+                .Add(dt.Offset)
+        Date.ofDateTime codified
+        
     [<AutoOpen>]
     module internal Adoc =
+
         let tags (tags: string) =
             String.split ',' tags
             |> Array.map String.trim
@@ -107,6 +109,23 @@ module Entry =
 
         let splitParagraph (paragraph: string) =
             Regex.Split(paragraph, @"(?<=[.!?])\s+")
+            |> Array.filter (fun s -> not <| String.IsNullOrWhiteSpace(s))
+
+        let codify lines =
+            let acc =
+                ResizeArray<string>(capacity=Array.length lines + 64)
+            
+            for line in lines do
+                let codeLines =
+                    splitParagraph line
+                for item in codeLines do
+                    acc.Add(item)
+
+                if Array.length codeLines > 1 then
+                    acc[acc.Count-2] <- $"{acc[acc.Count-2]} +"
+                    acc.RemoveAt(acc.Count - 1)
+                    
+            List.ofSeq acc
 
         let adocLines (entry: Entry) =
             let lines =
@@ -115,12 +134,12 @@ module Entry =
                 )
             let lines = 
                 lines.Split(Env.newLine)
-                |> Array.map (fun line -> $"{line} +")
-   
+                |> Array.map (fun line -> $"{line} +")  
+
             let i = Array.lasti lines
             lines[i] <- lines[i].TrimEnd(" +".ToCharArray())
 
-            List.ofSeq lines
+            codify lines        
 
         let appendNameSection (entry: Entry) (writer: StreamWriter) =
             let section =
