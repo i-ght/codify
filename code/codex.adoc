@@ -2682,17 +2682,16 @@ I like ice cream cones
 
 ==== Recipe For The Future
 
-[start=0]
-1. Ask your question +
-2. Coffee, Milk, Honey mixture +
-3. Dump the remnants onto the stone +
-4. See how the droplets land +
-5. You see how you can't really predict how they will land +
-6. You see how it's pretty vague… Possibly there is meaning… Hmm… +
-7. Yeah, I don't know +
-8. Got no answers for you +
-9. I'm afraid this is the extent of my powers +
-10. Enjoy
+0. Ask your question +
+1. Coffee, Milk, Honey mixture +
+2. Dump the remnants onto the stone +
+3. See how the droplets land +
+4. You see how you can't really predict how they will land +
+5. You see how it's pretty vague… Possibly there is meaning… Hmm… +
+6. Yeah, I don't know +
+7. Got no answers for you +
+8. I'm afraid this is the extent of my powers +
+9. Enjoy
 
 === 03-20
 

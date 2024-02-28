@@ -2,9 +2,9 @@
 open System.IO
 open System.Globalization
 open System.Collections.Generic
+open System.Text.RegularExpressions
 
 open CsvHelper
-
 
 type ContentEntryData =
     { Date: DateTimeOffset 
@@ -12,7 +12,7 @@ type ContentEntryData =
       Tags: string 
       Content: string }
 
-type EntryDay = DateTimeOffset
+type EntryDay = DateOnly
 
 type Entry =
     { Date: EntryDay 
@@ -20,7 +20,7 @@ type Entry =
       Tags: string []
       Content: string }
 
-type EntryMonth = DateTimeOffset
+type EntryMonth = DateOnly
 type Entries = ResizeArray<Entry>
 type EntryDays = Dictionary<EntryDay, Entries>
 type EntriesMap = Dictionary<EntryMonth, EntryDays>
@@ -43,7 +43,12 @@ module Env =
     let newLine =
         Environment.NewLine
 
-[<RequireQualifiedAccess>]
+module Date =
+    let ofDateTime (dateTime: DateTimeOffset) =
+        let (date, _time, _offset) =
+            dateTime.Deconstruct()
+        date
+
 module Array =
     let inline lasti (arr:_[]) = arr.Length - 1
 
@@ -72,17 +77,18 @@ module Csv =
 
 module Entry =
 
-    let month (day: DateTimeOffset): EntryMonth =
+    let month (day: DateOnly): EntryMonth =
         let days =
             TimeSpan.FromDays(float (day.Day - 1))
 
         (*Changes date day of month to be one and hour:minute:second of time to be 00:00:00 *)
-        let ret =
+        let updated =
             day
+                .ToDateTime(TimeOnly(0, 0, 0))
                 .Subtract(days)
                 .ToUniversalTime()
-                .Add(day.Offset)
-        ret
+(*                 .Add(day.Offset) *)
+        Date.ofDateTime (DateTimeOffset(updated))
 
     [<AutoOpen>]
     module internal Adoc =
@@ -99,6 +105,9 @@ module Entry =
         let flush (writer: StreamWriter) =
             writer.Flush()
 
+        let splitParagraph (paragraph: string) =
+            Regex.Split(paragraph, @"(?<=[.!?])\s+")
+
         let adocLines (entry: Entry) =
             let lines =
                 entry.Content.TrimEnd(
@@ -107,7 +116,7 @@ module Entry =
             let lines = 
                 lines.Split(Env.newLine)
                 |> Array.map (fun line -> $"{line} +")
-
+   
             let i = Array.lasti lines
             lines[i] <- lines[i].TrimEnd(" +".ToCharArray())
 
@@ -119,7 +128,7 @@ module Entry =
                   $"==== {entry.Name}" ]
                 |> String.concat Env.newLine
             appendLine section writer
-            
+
         let appendContent (entry: Entry) (writer: StreamWriter) =
 
             let content =
@@ -158,7 +167,7 @@ module Entry =
     let ofData (entries: ContentEntryData seq) = seq {
         for entry in entries do
             yield 
-                { Date=entry.Date
+                { Date=Date.ofDateTime entry.Date
                   Name=entry.Name
                   Tags=tags entry.Tags
                   Content=entry.Content }
