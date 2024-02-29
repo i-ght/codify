@@ -79,21 +79,6 @@ module Csv =
 
 module Entry =
 
-    let month (entry: Entry): EntryMonth =
-        let date = entry.Date
-        let days =
-            TimeSpan.FromDays(float (date.Day - 1))
-
-        (*Changes date day of month to be one and hour:minute:second of time to be 00:00:00 *)
-        let dt =
-            DateTimeOffset(date.ToDateTime(TimeOnly(0, 0, 0)))
-        let codified = 
-            dt
-                .Subtract(days)
-                .ToUniversalTime()
-                .Add(dt.Offset)
-        Date.ofDateTime codified
-        
     [<AutoOpen>]
     module internal Adoc =
 
@@ -118,13 +103,20 @@ module Entry =
             let acc =
                 ResizeArray<string>(capacity=Array.length lines + 64)
             
+            let lastIsPlus (a: string []) =
+                let lasti = a.Length - 1
+                if a[lasti] = "+" then
+                    true
+                else
+                    false
+
             for line in lines do
                 let codeLines =
                     splitParagraph line
                 for item in codeLines do
                     acc.Add(item)
 
-                if Array.length codeLines > 1 then
+                if Array.length codeLines > 1 && lastIsPlus codeLines then
                     acc[acc.Count-2] <- $"{acc[acc.Count-2]} +"
                     acc.RemoveAt(acc.Count - 1)
                     
@@ -194,6 +186,21 @@ module Entry =
             appendLine section writer
 
 
+    let month (entry: Entry): EntryMonth =
+        let date = entry.Date
+        let days =
+            TimeSpan.FromDays(float (date.Day - 1))
+
+        (*Changes date day of month to be one and hour:minute:second of time to be 00:00:00 *)
+        let dt =
+            DateTimeOffset(date.ToDateTime(TimeOnly(0, 0, 0)))
+        let codified = 
+            dt
+                .Subtract(days)
+                .ToUniversalTime()
+                .Add(dt.Offset)
+        Date.ofDateTime codified
+        
     let ofData (entries: ContentEntryData seq) = seq {
         for entry in entries do
             yield 
@@ -214,6 +221,7 @@ module Entry =
             writer "code/codex.adoc"
         
         appendHeader writer
+
         for pair in entries do
             let struct (year, months) = 
                 (pair.Key, pair.Value)
@@ -255,7 +263,10 @@ let head _argv =
         List.map Entry.year es
         |> List.map (fun day -> day.Year)
         |> Set.ofSeq
-        |> Set.map (fun year -> EntryYear(year, 1, 1))
+        |> Set.map (
+            fun year ->
+                EntryYear(year, 1, 1)
+        )
         |> List.ofSeq
         |> List.rev
 
