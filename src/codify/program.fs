@@ -79,13 +79,14 @@ module Csv =
 
 module Entry =
 
-    let month (day: DateOnly): EntryMonth =
+    let month (entry: Entry): EntryMonth =
+        let date = entry.Date
         let days =
-            TimeSpan.FromDays(float (day.Day - 1))
+            TimeSpan.FromDays(float (date.Day - 1))
 
         (*Changes date day of month to be one and hour:minute:second of time to be 00:00:00 *)
         let dt =
-            DateTimeOffset(day.ToDateTime(TimeOnly(0, 0, 0)))
+            DateTimeOffset(date.ToDateTime(TimeOnly(0, 0, 0)))
         let codified = 
             dt
                 .Subtract(days)
@@ -169,7 +170,7 @@ module Entry =
             appendLine section writer
 
         let appendMonthSection (month: EntryMonth) (writer: StreamWriter) =
-            let month = month.ToString("MMM")
+            let month = month.ToString("MMMM")
             let section =
                 [ ""
                   $"=== {month}" ]
@@ -202,8 +203,11 @@ module Entry =
                   Content=entry.Content }
     }
 
-    let year (entry: Entry) = entry.Date
-    let day (entry: Entry) = entry.Date
+    let year (entry: Entry) =
+        EntryYear(entry.Date.Year, 1, 1)
+        
+    let day (entry: Entry) =
+        entry.Date
 
     let writeadoc (entries: EntriesMap) =
         use writer =
@@ -244,8 +248,7 @@ let head _argv =
 
     (* unique combinations of year and month are used as keys for EntriesMap*)
     let months = 
-        List.map Entry.day es
-        |> List.map Entry.month
+        List.map Entry.month es
         |> List.ofSeq
 
     let years =
@@ -253,9 +256,10 @@ let head _argv =
         |> List.map (fun day -> day.Year)
         |> Set.ofSeq
         |> Set.map (fun year -> EntryYear(year, 1, 1))
-        |> List.ofSeq    
+        |> List.ofSeq
+        |> List.rev
 
-    let entries =
+    let entries: EntriesMap =
         EntriesMap(List.length years)
 
     for year in years do
@@ -263,19 +267,19 @@ let head _argv =
             entries[year] <- EntryMonths(12)
 
         for month in months do
-            if not <| entries[year].ContainsKey(month) then
+            if year.Year = month.Year && not <| entries[year].ContainsKey(month) then
                 entries[year][month] <- EntryDays(8)
 
-        for e in es do
-            let struct (day, month) =
-                (e.Date, Entry.month e.Date)
-            if not <| entries[year].[month].ContainsKey(day) then
-                entries[year].[month][day] <- Entries(8)
+    for e in es do
+        let struct (day, month, year) =
+            (e.Date, Entry.month e, Entry.year e)
+        if not <| entries[year].[month].ContainsKey(day) then
+            entries[year].[month][day] <- Entries(8)
 
-            let entries = entries[year].[month][day]
-            entries.Add(e)
+        let entries = entries[year].[month][day]
+        entries.Add(e)
 
-        Entry.writeadoc entries
+    Entry.writeadoc entries
 
     0
 
