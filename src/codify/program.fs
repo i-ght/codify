@@ -20,10 +20,12 @@ type Entry =
       Tags: string []
       Content: string }
 
+type EntryYear = DateOnly
 type EntryMonth = DateOnly
 type Entries = ResizeArray<Entry>
 type EntryDays = Dictionary<EntryDay, Entries>
-type EntriesMap = Dictionary<EntryMonth, EntryDays>
+type EntryMonths = Dictionary<EntryMonth, EntryDays>
+type EntriesMap = Dictionary<EntryYear, EntryMonths>
 
 module Env =
 
@@ -140,14 +142,6 @@ module Entry =
             lines[i] <- lines[i].TrimEnd(" +".ToCharArray())
 
             codify lines        
-
-        let appendNameSection (entry: Entry) (writer: StreamWriter) =
-            let section =
-                [ ""
-                  $"==== {entry.Name}" ]
-                |> String.concat Env.newLine
-            appendLine section writer
-
         let appendContent (entry: Entry) (writer: StreamWriter) =
 
             let content =
@@ -160,17 +154,25 @@ module Entry =
         let header =
             [ "= Memory Map"
               ":toc: left"
-              ":toclevels: 3" ]
+              ":toclevels: 4" ]
             |> String.concat Env.newLine
 
         let appendHeader (writer: StreamWriter) =
             appendLine header writer
 
-        let appendMonthSection (month: EntryMonth) (writer: StreamWriter) =
-            let ``yyyy MMM`` = month.ToString("yyyy MMM")
+        let appendYearSection (year: EntryYear) (writer: StreamWriter) =
             let section =
                 [ ""
-                  $"== {``yyyy MMM``}" ]
+                  $"== {year.Year}" ]
+                |> String.concat Env.newLine
+
+            appendLine section writer
+
+        let appendMonthSection (month: EntryMonth) (writer: StreamWriter) =
+            let month = month.ToString("MMM")
+            let section =
+                [ ""
+                  $"=== {month}" ]
                 |> String.concat Env.newLine
 
             appendLine section writer
@@ -179,9 +181,17 @@ module Entry =
             let date = day.ToString("MM-dd")
             let section =
                 [ ""
-                  $"=== {date}" ]
+                  $"==== {date}" ]
                 |> String.concat Env.newLine
             appendLine section writer
+
+        let appendNameSection (entry: Entry) (writer: StreamWriter) =
+            let section =
+                [ ""
+                  $"===== {entry.Name}" ]
+                |> String.concat Env.newLine
+            appendLine section writer
+
 
     let ofData (entries: ContentEntryData seq) = seq {
         for entry in entries do
@@ -192,6 +202,7 @@ module Entry =
                   Content=entry.Content }
     }
 
+    let year (entry: Entry) = entry.Date
     let day (entry: Entry) = entry.Date
 
     let writeadoc (entries: EntriesMap) =
@@ -199,24 +210,29 @@ module Entry =
             writer "code/codex.adoc"
         
         appendHeader writer
-
         for pair in entries do
-            let struct (month, days) = 
+            let struct (year, months) = 
                 (pair.Key, pair.Value)
-            
-            appendMonthSection month writer
 
-            for pair in days do
-                let struct (day, entries) =
+            appendYearSection year writer
+            
+            for pair in months do
+                let struct (month, days) = 
                     (pair.Key, pair.Value)
                 
-                appendDaySection day writer
+                appendMonthSection month writer
 
-                for entry in entries do
-                    appendNameSection entry writer
-                    appendContent entry writer
+                for pair in days do
+                    let struct (day, entries) =
+                        (pair.Key, pair.Value)
+                    
+                    appendDaySection day writer
 
-            flush writer
+                    for entry in entries do
+                        appendNameSection entry writer
+                        appendContent entry writer
+
+                flush writer
 
 let head _argv =
     let ``content.csv`` = "./data/content.csv"
@@ -232,23 +248,34 @@ let head _argv =
         |> List.map Entry.month
         |> List.ofSeq
 
+    let years =
+        List.map Entry.year es
+        |> List.map (fun day -> day.Year)
+        |> Set.ofSeq
+        |> Set.map (fun year -> EntryYear(year, 1, 1))
+        |> List.ofSeq    
+
     let entries =
-        EntriesMap(List.length months)
+        EntriesMap(List.length years)
 
-    for month in months do
-        if not <| entries.ContainsKey(month) then
-            entries[month] <- EntryDays(8)
+    for year in years do
+        if not <| entries.ContainsKey(year) then
+            entries[year] <- EntryMonths(12)
 
-    for e in es do
-        let struct (day, month) =
-            (e.Date, Entry.month e.Date)
-        if not <| entries[month].ContainsKey(day) then
-            entries[month][day] <- Entries(8)
+        for month in months do
+            if not <| entries[year].ContainsKey(month) then
+                entries[year][month] <- EntryDays(8)
 
-        let entries = entries[month][day]
-        entries.Add(e)
+        for e in es do
+            let struct (day, month) =
+                (e.Date, Entry.month e.Date)
+            if not <| entries[year].[month].ContainsKey(day) then
+                entries[year].[month][day] <- Entries(8)
 
-    Entry.writeadoc entries
+            let entries = entries[year].[month][day]
+            entries.Add(e)
+
+        Entry.writeadoc entries
 
     0
 
