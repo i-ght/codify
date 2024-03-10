@@ -6,7 +6,24 @@ open System.Text.RegularExpressions
 
 open CsvHelper
 
-type ContentEntryData =
+[<Struct>]
+type Content =
+    | DayBook
+    | QuoteBook
+
+type QuoteBookEntryDataUnit =
+    { Source: string
+      Content: string }
+
+[<Struct>]
+type QuoteSource =
+    | Book of titlePage: struct (string * int)
+
+type QuoteBookEntry =
+    { Source: QuoteSource
+      Content: string }
+
+type DayBookEntryDataUnit =
     { Date: DateTimeOffset 
       Name: string
       Tags: string 
@@ -14,7 +31,7 @@ type ContentEntryData =
 
 type EntryDay = DateOnly
 
-type Entry =
+type DayBookEntry =
     { Date: EntryDay 
       Name: string
       Tags: string []
@@ -22,7 +39,7 @@ type Entry =
 
 type EntryYear = DateOnly
 type EntryMonth = DateOnly
-type Entries = ResizeArray<Entry>
+type Entries = ResizeArray<DayBookEntry>
 type EntryDays = Dictionary<EntryDay, Entries>
 type EntryMonths = Dictionary<EntryMonth, EntryDays>
 type EntriesMap = Dictionary<EntryYear, EntryMonths>
@@ -55,7 +72,7 @@ module Array =
     let inline lasti (arr:_[]) = arr.Length - 1
 
 module String =
-    let split (c: char) (s: string) = s.Split(c)
+    let split (sp: string) (s: string) = s.Split(sp)
     
     let trim (s: string) = s.Trim()
     
@@ -77,7 +94,23 @@ module Csv =
 
         records |> List.ofSeq
 
-module Entry =
+module QuoteBookEntry =
+    
+    let ofDataUnits (entries: QuoteBookEntryDataUnit seq) = seq {
+        for entry in entries do
+            let sp = String.split "::" entry.Source
+            let struct (kind, title, page) = 
+                (sp[0], sp[1], sp[2])
+            let source =
+                match kind with
+                | "Book" -> Book struct (title, int page)
+                | _ -> invalidOp<QuoteSource> "failed to parse quote source"
+            yield 
+                { Source=source
+                  Content=entry.Content }
+    }
+
+module DayBookEntry =
 
     [<AutoOpen>]
     module internal Adoc =
@@ -122,7 +155,7 @@ module Entry =
                     
             List.ofSeq acc
 
-        let adocLines (entry: Entry) =
+        let adocLines (entry: DayBookEntry) =
             let lines =
                 entry.Content.TrimEnd(
                     Env.newLine.ToCharArray()
@@ -135,7 +168,7 @@ module Entry =
             lines[i] <- lines[i].TrimEnd(" +".ToCharArray())
 
             codify lines        
-        let appendContent (entry: Entry) (writer: StreamWriter) =
+        let appendContent (entry: DayBookEntry) (writer: StreamWriter) =
 
             let content =
                 String.concat
@@ -178,15 +211,14 @@ module Entry =
                 |> String.concat Env.newLine
             appendLine section writer
 
-        let appendNameSection (entry: Entry) (writer: StreamWriter) =
+        let appendNameSection (entry: DayBookEntry) (writer: StreamWriter) =
             let section =
                 [ ""
                   $"===== {entry.Name}" ]
                 |> String.concat Env.newLine
             appendLine section writer
 
-
-    let month (entry: Entry): EntryMonth =
+    let month (entry: DayBookEntry): EntryMonth =
         let date = entry.Date
         let days =
             TimeSpan.FromDays(float (date.Day - 1))
@@ -201,7 +233,7 @@ module Entry =
                 .Add(dt.Offset)
         Date.ofDateTime codified
         
-    let ofData (entries: ContentEntryData seq) = seq {
+    let ofDataUnits (entries: DayBookEntryDataUnit seq) = seq {
         for entry in entries do
             yield 
                 { Date=Date.ofDateTime entry.Date
@@ -210,10 +242,10 @@ module Entry =
                   Content=entry.Content }
     }
 
-    let year (entry: Entry) =
+    let year (entry: DayBookEntry) =
         EntryYear(entry.Date.Year, 1, 1)
         
-    let day (entry: Entry) =
+    let day (entry: DayBookEntry) =
         entry.Date
 
     let writeadoc (entries: EntriesMap) =
@@ -247,20 +279,20 @@ module Entry =
                 flush writer
 
 let head _argv =
-    let ``content.csv`` = "./data/content.csv"
+    let ``book_of_days.csv`` = "./data/book_of_days.csv"
     let es =
-        Csv.records<ContentEntryData> ``content.csv``
-        |> Entry.ofData
+        Csv.records<DayBookEntryDataUnit> ``book_of_days.csv``
+        |> DayBookEntry.ofDataUnits
         |> List.ofSeq
         |> List.rev
 
     (* unique combinations of year and month are used as keys for EntriesMap*)
     let months = 
-        List.map Entry.month es
+        List.map DayBookEntry.month es
         |> List.ofSeq
 
     let years =
-        List.map Entry.year es
+        List.map DayBookEntry.year es
         |> List.map (fun day -> day.Year)
         |> Set.ofSeq
         |> Set.map (
@@ -270,7 +302,7 @@ let head _argv =
         |> List.ofSeq
         |> List.rev
 
-    let entries: EntriesMap =
+    let entries =
         EntriesMap(List.length years)
 
     for year in years do
@@ -279,18 +311,18 @@ let head _argv =
 
         for month in months do
             if year.Year = month.Year && not <| entries[year].ContainsKey(month) then
-                entries[year][month] <- EntryDays(8)
+                entries[year][month] <- EntryDays(31)
 
     for e in es do
         let struct (day, month, year) =
-            (e.Date, Entry.month e, Entry.year e)
+            (e.Date, DayBookEntry.month e, DayBookEntry.year e)
         if not <| entries[year].[month].ContainsKey(day) then
             entries[year].[month][day] <- Entries(8)
 
         let entries = entries[year].[month][day]
         entries.Add(e)
 
-    Entry.writeadoc entries
+    DayBookEntry.writeadoc entries
 
     0
 
