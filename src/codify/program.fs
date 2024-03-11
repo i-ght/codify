@@ -116,7 +116,7 @@ module DayBookEntry =
     module internal Adoc =
 
         let tags (tags: string) =
-            String.split ',' tags
+            String.split "," tags
             |> Array.map String.trim
             
         let writer path =
@@ -250,7 +250,7 @@ module DayBookEntry =
 
     let writeadoc (entries: EntriesMap) =
         use writer =
-            writer "code/codex.adoc"
+            writer "codex/codex.adoc"
         
         appendHeader writer
 
@@ -306,8 +306,7 @@ let head _argv =
         EntriesMap(List.length years)
 
     for year in years do
-        if not <| entries.ContainsKey(year) then
-            entries[year] <- EntryMonths(12)
+        entries[year] <- EntryMonths(12)
 
         for month in months do
             if year.Year = month.Year && not <| entries[year].ContainsKey(month) then
